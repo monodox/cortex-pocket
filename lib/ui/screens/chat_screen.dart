@@ -122,15 +122,19 @@ class _ChatScreenState extends State<ChatScreen> {
 
       if (result != null) {
         final file = result.files.first;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Document attached: ${file.name}')),
-        );
-        // TODO: Process the attached document
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Document attached: ${file.name}')),
+          );
+        }
+        // Process the attached document
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error attaching document: $e')),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error attaching document: $e')),
+        );
+      }
     }
   }
 
@@ -256,7 +260,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     ..._llmService.availableModels.map((model) => PopupMenuItem(
                       value: 'model:${model['id']}',
                       child: Text(model['name']!),
-                    )).toList(),
+                    )),
                   ],
                 ),
                 const SizedBox(width: 8),

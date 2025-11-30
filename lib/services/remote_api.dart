@@ -6,11 +6,6 @@ class RemoteApi {
   static const String _geminiUrl = 'https://generativelanguage.googleapis.com/v1beta';
   static const Duration _timeout = Duration(seconds: 30);
   
-  static String _getBaseUrl(String apiKey) {
-    if (apiKey.startsWith('AIza')) return _geminiUrl;
-    return _openaiUrl;
-  }
-  
   static bool _isGeminiKey(String apiKey) => apiKey.startsWith('AIza');
 
   static Future<bool> testKey(String apiKey) async {

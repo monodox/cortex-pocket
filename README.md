@@ -4,7 +4,15 @@
 [![Dart](https://img.shields.io/badge/Dart-3.0+-blue.svg)](https://dart.dev/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-On-device AI powered by optimized local LLMs. Cortex brings powerful offline LLM capabilities to your device using optimized on-device models for fast, private AI assistance.
+Cortex Pocket is an offline-first, Arm-optimized mobile AI assistant powered by local LLMs with optional cloud fallback.
+
+## 💡 Why Cortex Pocket?
+
+- **Fully offline AI** — no other mobile app shows token-by-token Arm-optimized generation
+- **Smart dual-mode engine** (local + remote fallback)
+- **Developer-grade tooling**: file reasoning, code assistance
+- **On-device benchmarks** expose real model performance
+- **Persona-based intelligence** for multiple workflows
 
 ## ✨ Features
 
@@ -42,8 +50,8 @@ On-device AI powered by optimized local LLMs. Cortex brings powerful offline LLM
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/yourusername/cortex-pocket.git
-cd cortex
+git clone https://github.com/monodox/cortex-pocket.git
+cd cortex-pocket
 ```
 
 2. **Install dependencies**
@@ -102,6 +110,15 @@ data/
 - **Platform Layer**: Conditional imports for web/native compatibility
 - **Training Data**: AI personas with specialized knowledge and behavior patterns
 
+## 🔧 Arm Optimization
+
+- **Compiled llama.cpp** specifically with Arm NEON + Armv8 instructions
+- **Enabled f16 KV cache** for optimized memory usage
+- **Quantization-aware model selection** (Q4_K_M recommended for Arm)
+- **Benchmarks collected** using on-device profiling (CPU load, memory, token/s)
+- **Optimized thread configuration** based on big.LITTLE CPU clusters
+- **Zero-copy tensor pipeline** to minimize memory overhead
+
 ## 🔧 Model Integration
 
 1. **Add model files** to `assets/models/`
@@ -128,6 +145,18 @@ Each persona includes:
 - **Specializations**: Areas of expertise and focus domains
 
 See `data/` directory for complete persona definitions and training data.
+
+## 🧠 How It Works (Pipeline)
+
+1. **User selects a model** (local or remote)
+2. **LLMService decides inference mode** (offline/online)
+3. **For local**:
+   - FFI sends prompt → llama.cpp engine
+   - Tokens streamed back → UI bubble
+4. **For remote**:
+   - HTTPS request with encrypted API key
+   - Response parsed and streamed
+5. **Chat history stored locally** using encrypted storage
 
 ## 📱 Screens
 

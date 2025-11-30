@@ -80,6 +80,17 @@ lib/
 ├── ui/             # User interface
 ├── utils/          # Helper utilities
 └── main.dart       # App entry point
+
+data/
+├── personas/       # AI persona training data
+│   ├── developer.json  # Software developer persona
+│   ├── security.json   # Security expert persona
+│   ├── writer.json     # Technical writer persona
+│   └── analyst.json    # Data analyst persona
+├── app_info.json   # App features and platform info
+├── models.json     # Supported models and recommendations
+├── faq.json       # Frequently asked questions
+└── guide.json     # Cortex guide persona
 ```
 
 ### Key Components
@@ -89,6 +100,7 @@ lib/
 - **UI Layer**: 10 screens with Material Design
 - **Utils Layer**: Device info, benchmarks, file handling
 - **Platform Layer**: Conditional imports for web/native compatibility
+- **Training Data**: AI personas with specialized knowledge and behavior patterns
 
 ## 🔧 Model Integration
 
@@ -96,6 +108,26 @@ lib/
 2. **Update LLMService** for your specific model
 3. **Configure FFI bindings** for optimal performance
 4. **Set quantization** (Q8/Q6/Q4/Q3) based on device capabilities
+
+## 🎭 AI Personas
+
+Cortex Pocket features specialized AI personas with unique expertise and training:
+
+### Available Personas
+- 👨‍💻 **Developer**: Expert in coding, debugging, and software architecture
+- 🔒 **Security Expert**: Specializes in cybersecurity and secure coding practices
+- ✍️ **Technical Writer**: Focuses on clear documentation and communication
+- 📊 **Data Analyst**: Expert in metrics, insights, and business intelligence
+- 🎯 **Cortex Guide**: Comprehensive app assistance and troubleshooting
+
+### Training Data Structure
+Each persona includes:
+- **System Prompts**: Core personality and behavior definition
+- **Training Examples**: Real-world input/output pairs for consistency
+- **Personality Traits**: Behavioral characteristics and communication style
+- **Specializations**: Areas of expertise and focus domains
+
+See `data/` directory for complete persona definitions and training data.
 
 ## 📱 Screens
 
@@ -148,6 +180,24 @@ Cortex Pocket includes an optional remote API feature for enhanced capabilities:
 - gpt-3.5-turbo
 - gpt-4
 - gpt-4-turbo
+
+## 📁 Data & Configuration
+
+Cortex Pocket includes comprehensive data files for AI behavior and user guidance:
+
+### Training Data (`data/`)
+- **Persona Definitions**: Specialized AI personalities with training examples
+- **App Information**: Features, platforms, and screen descriptions
+- **Model Database**: Supported models with device recommendations
+- **FAQ System**: Categorized help and troubleshooting guides
+- **Guide Assistant**: Comprehensive app knowledge for user support
+
+### Supported Models
+- **Llama 3.2 3B**: Meta's mobile-optimized model
+- **Phi-3.5 Mini**: Microsoft's efficient 3.8B model
+- **Qwen2.5 3B**: Alibaba's multilingual coding model
+- **Gemma 2 2B**: Google's lightweight model
+- **CodeLlama 7B**: Meta's specialized coding model
 
 ## 🔒 Privacy & Security
 

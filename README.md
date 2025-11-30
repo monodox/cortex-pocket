@@ -33,6 +33,7 @@ On-device AI powered by optimized local LLMs. Cortex brings powerful offline LLM
 ### Supported Platforms
 - 🤖 **Android** (Primary target)
 - 🍎 **iOS** 
+- 🌐 **Web** (Remote API only)
 - 🐧 **Linux**
 - 🍎 **macOS**
 - 🪟 **Windows**
@@ -58,6 +59,9 @@ flutter run
 # Specific platforms
 flutter run -d android
 flutter run -d ios
+flutter run -d chrome    # Web platform (Chrome)
+flutter run -d edge      # Web platform (Edge)
+flutter run -d web-server # Web platform (any browser)
 flutter run -d linux
 flutter run -d macos
 flutter run -d windows
@@ -79,11 +83,12 @@ lib/
 ```
 
 ### Key Components
-- **FFI Layer**: Native llama.cpp integration
+- **FFI Layer**: Native llama.cpp integration (native platforms only)
 - **Data Layer**: Encrypted storage & repositories
 - **Service Layer**: LLM processing & management
 - **UI Layer**: 10 screens with Material Design
 - **Utils Layer**: Device info, benchmarks, file handling
+- **Platform Layer**: Conditional imports for web/native compatibility
 
 ## 🔧 Model Integration
 
@@ -130,6 +135,7 @@ Cortex Pocket includes an optional remote API feature for enhanced capabilities:
 - **Smart Fallback**: Remote failures automatically use local processing
 - **Visual Indicators**: Icons show current mode (⚡ local, ☁️ remote)
 - **Benchmarks**: Always use local models regardless of remote setting
+- **Web Platform**: Local models not supported - requires Remote API configuration
 
 ### Supported Models
 **Gemini API (AIza...):**

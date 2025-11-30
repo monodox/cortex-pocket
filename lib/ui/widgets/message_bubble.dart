@@ -25,12 +25,7 @@ class MessageBubble extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              message.content,
-              style: TextStyle(
-                color: message.isUser ? Colors.white : Colors.black87,
-              ),
-            ),
+_buildMessageContent(),
             const SizedBox(height: 4),
             Text(
               _formatTime(message.timestamp),
@@ -44,6 +39,48 @@ class MessageBubble extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildMessageContent() {
+    final content = message.content;
+    final textColor = message.isUser ? Colors.white : Colors.black87;
+    
+    // Simple markdown processing for **bold** text
+    final parts = content.split('**');
+    if (parts.length == 1) {
+      // No bold formatting
+      return Text(
+        content,
+        style: TextStyle(color: textColor),
+      );
+    }
+    
+    // Process bold formatting
+    final spans = <TextSpan>[];
+    for (int i = 0; i < parts.length; i++) {
+      if (i % 2 == 0) {
+        // Regular text
+        if (parts[i].isNotEmpty) {
+          spans.add(TextSpan(
+            text: parts[i],
+            style: TextStyle(color: textColor),
+          ));
+        }
+      } else {
+        // Bold text
+        spans.add(TextSpan(
+          text: parts[i],
+          style: TextStyle(
+            color: textColor,
+            fontWeight: FontWeight.bold,
+          ),
+        ));
+      }
+    }
+    
+    return RichText(
+      text: TextSpan(children: spans),
     );
   }
 

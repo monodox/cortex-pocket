@@ -110,14 +110,21 @@ data/
 - **Platform Layer**: Conditional imports for web/native compatibility
 - **Training Data**: AI personas with specialized knowledge and behavior patterns
 
-## 🔧 Arm Optimization
+## 🏎️ Arm Optimization
 
-- **Compiled llama.cpp** specifically with Arm NEON + Armv8 instructions
-- **Enabled f16 KV cache** for optimized memory usage
-- **Quantization-aware model selection** (Q4_K_M recommended for Arm)
-- **Benchmarks collected** using on-device profiling (CPU load, memory, token/s)
-- **Optimized thread configuration** based on big.LITTLE CPU clusters
-- **Zero-copy tensor pipeline** to minimize memory overhead
+Cortex Pocket is optimized specifically for Arm-based mobile CPUs:
+
+- Built with llama.cpp compiled for Armv8-A + NEON acceleration
+- Uses f16 KV cache for reduced memory bandwidth
+- Utilizes quantized GGUF models (Q8, Q6, Q4, Q3) for efficient mobile inference
+- Thread scheduling optimized for big.LITTLE CPU architectures
+- On-device profiling captures:
+  - token/s
+  - RAM usage
+  - CPU cluster utilization
+  - model load latency
+
+These optimizations ensure fast, private AI performance on modern Android devices.
 
 ## 🔧 Model Integration
 

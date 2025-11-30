@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:file_picker/file_picker.dart';
 import '../../models/message.dart';
 import '../../services/llm_service.dart';
 import '../../core/routes.dart';
@@ -112,6 +113,27 @@ class _ChatScreenState extends State<ChatScreen> {
     });
   }
 
+  Future<void> _attachDocument() async {
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['txt', 'pdf', 'doc', 'docx', 'md'],
+      );
+
+      if (result != null) {
+        final file = result.files.first;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Document attached: ${file.name}')),
+        );
+        // TODO: Process the attached document
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error attaching document: $e')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -122,17 +144,35 @@ class _ChatScreenState extends State<ChatScreen> {
             const SizedBox(width: 8),
             const Text('Cortex Pocket'),
             const Spacer(),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(
-                color: _llmService.useRemote ? Colors.blue : 
-                       _llmService.isModelLoaded ? Colors.green : Colors.orange,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Text(
-                'Mode: ${_llmService.mode}',
-                style: const TextStyle(color: Colors.white, fontSize: 12),
-              ),
+            Row(
+              children: [
+                Icon(
+                  Icons.offline_bolt,
+                  size: 16,
+                  color: !_llmService.useRemote ? Colors.green : Colors.grey,
+                ),
+                const SizedBox(width: 4),
+                Switch(
+                  value: _llmService.useRemote,
+                  onChanged: _llmService.hasApiKey ? (value) {
+                    _llmService.setUseRemote(value);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Switched to ${value ? "Remote" : "Local"} mode'
+                        ),
+                      ),
+                    );
+                  } : null,
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                ),
+                const SizedBox(width: 4),
+                Icon(
+                  Icons.cloud,
+                  size: 16,
+                  color: _llmService.useRemote ? Colors.blue : Colors.grey,
+                ),
+              ],
             ),
           ],
         ),
@@ -146,24 +186,10 @@ class _ChatScreenState extends State<ChatScreen> {
                   SnackBar(content: Text('Model switched to $model')),
                 );
               },
-              itemBuilder: (context) => [
-                const PopupMenuItem(
-                  value: 'gemini-2.5-flash',
-                  child: Text('Gemini 2.5 Flash'),
-                ),
-                const PopupMenuItem(
-                  value: 'gemini-1.5-pro',
-                  child: Text('Gemini 1.5 Pro'),
-                ),
-                const PopupMenuItem(
-                  value: 'gpt-3.5-turbo',
-                  child: Text('GPT-3.5 Turbo'),
-                ),
-                const PopupMenuItem(
-                  value: 'gpt-4',
-                  child: Text('GPT-4'),
-                ),
-              ],
+              itemBuilder: (context) => _llmService.availableModels.map((model) => PopupMenuItem(
+                value: model['id'],
+                child: Text(model['name']!),
+              )).toList(),
             ),
           IconButton(
             icon: const Icon(Icons.person),
@@ -197,6 +223,43 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
             child: Row(
               children: [
+                PopupMenuButton<String>(
+                  icon: const Icon(Icons.add_circle_outline),
+                  onSelected: (value) {
+                    if (value == 'attach') {
+                      _attachDocument();
+                    } else if (value.startsWith('model:')) {
+                      final model = value.substring(6);
+                      _llmService.setSelectedModel(model);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Model switched to $model')),
+                      );
+                    }
+                  },
+                  itemBuilder: (context) => [
+                    const PopupMenuItem(
+                      value: 'attach',
+                      child: Row(
+                        children: [
+                          Icon(Icons.attach_file),
+                          SizedBox(width: 8),
+                          Text('Attach Document'),
+                        ],
+                      ),
+                    ),
+                    const PopupMenuDivider(),
+                    const PopupMenuItem(
+                      value: 'models',
+                      enabled: false,
+                      child: Text('Switch Model', style: TextStyle(fontWeight: FontWeight.bold)),
+                    ),
+                    ..._llmService.availableModels.map((model) => PopupMenuItem(
+                      value: 'model:${model['id']}',
+                      child: Text(model['name']!),
+                    )).toList(),
+                  ],
+                ),
+                const SizedBox(width: 8),
                 Expanded(
                   child: TextField(
                     controller: _controller,

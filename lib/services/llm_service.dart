@@ -122,4 +122,23 @@ class LLMService extends ChangeNotifier {
   bool get hasApiKey => _apiKey != null && _apiKey!.isNotEmpty;
   String get mode => _useRemote && hasApiKey ? 'Remote ($_selectedModel)' : 'On-device';
   String get selectedModel => _selectedModel;
+  
+  bool get isGeminiKey => _apiKey != null && _apiKey!.startsWith('AIza');
+  
+  List<Map<String, String>> get availableModels {
+    if (isGeminiKey) {
+      return [
+        {'id': 'gemini-2.5-flash', 'name': 'Gemini 2.5 Flash (Default)'},
+        {'id': 'gemini-2.5-pro', 'name': 'Gemini 2.5 Pro'},
+        {'id': 'gemini-2.5-flash-lite', 'name': 'Gemini 2.5 Flash Lite'},
+        {'id': 'gemini-3-pro-preview', 'name': 'Gemini 3 Pro Preview'},
+      ];
+    } else {
+      return [
+        {'id': 'gpt-3.5-turbo', 'name': 'GPT-3.5 Turbo'},
+        {'id': 'gpt-4', 'name': 'GPT-4'},
+        {'id': 'gpt-4-turbo', 'name': 'GPT-4 Turbo'},
+      ];
+    }
+  }
 }

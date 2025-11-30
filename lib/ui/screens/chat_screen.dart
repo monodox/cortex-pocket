@@ -21,11 +21,25 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
-    _initializeModel();
+    _initializeService();
+    _llmService.addListener(_onServiceChanged);
   }
 
-  Future<void> _initializeModel() async {
-    await _llmService.loadModel('cortex-7b-q4');
+  @override
+  void dispose() {
+    _llmService.removeListener(_onServiceChanged);
+    super.dispose();
+  }
+
+  void _onServiceChanged() {
+    if (mounted) setState(() {});
+  }
+
+  Future<void> _initializeService() async {
+    await _llmService.initialize();
+    if (!_llmService.useRemote) {
+      await _llmService.loadModel('cortex-7b-q4');
+    }
     setState(() {});
   }
 
@@ -100,11 +114,12 @@ class _ChatScreenState extends State<ChatScreen> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
-                color: _llmService.isModelLoaded ? Colors.green : Colors.orange,
+                color: _llmService.useRemote ? Colors.blue : 
+                       _llmService.isModelLoaded ? Colors.green : Colors.orange,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
-                _llmService.isModelLoaded ? 'Online' : 'Loading...',
+                'Mode: ${_llmService.mode}',
                 style: const TextStyle(color: Colors.white, fontSize: 12),
               ),
             ),
@@ -152,12 +167,12 @@ class _ChatScreenState extends State<ChatScreen> {
                       contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                     ),
                     onSubmitted: (_) => _sendMessage(),
-                    enabled: _llmService.isModelLoaded && !_isGenerating,
+                    enabled: (_llmService.isModelLoaded || _llmService.useRemote) && !_isGenerating,
                   ),
                 ),
                 const SizedBox(width: 8),
                 IconButton(
-                  onPressed: _llmService.isModelLoaded && !_isGenerating ? _sendMessage : null,
+                  onPressed: (_llmService.isModelLoaded || _llmService.useRemote) && !_isGenerating ? _sendMessage : null,
                   icon: _isGenerating 
                     ? const SizedBox(
                         width: 20,

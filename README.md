@@ -8,7 +8,7 @@ On-device AI powered by optimized local LLMs. Cortex brings powerful offline LLM
 
 ## ✨ Features
 
-- 🔒 **Fully Offline**: No cloud dependency, complete privacy
+- 🔒 **Fully Offline**: No cloud dependency, complete privacy by default
 - ⚡ **Real-time Generation**: Token-by-token response streaming
 - 📱 **Optimized Performance**: Arm-optimized for mobile devices
 - 🛡️ **Secure Conversations**: All processing happens locally
@@ -17,6 +17,7 @@ On-device AI powered by optimized local LLMs. Cortex brings powerful offline LLM
 - 🎭 **Multiple Personas**: Developer, Security, Writer, Analyst modes
 - 📊 **Performance Monitoring**: Real-time benchmarks and metrics
 - 📁 **File Analysis**: Support for logs, code, and text files
+- ☁️ **Optional Remote API**: Secure cloud fallback with API key encryption
 
 ## 🚀 Quick Start
 
@@ -85,11 +86,35 @@ lib/
 9. **Settings** (`/settings`) - App configuration
 10. **About** (`/about`) - App information
 
+## ☁️ Remote API Mode (Optional)
+
+Cortex Pocket includes an optional remote API feature for enhanced capabilities:
+
+### Setup
+1. Go to **Settings** → **Remote API**
+2. Enter your API key (OpenAI compatible)
+3. Tap **Save & Test** to validate
+4. Enable **Use Remote API** toggle
+5. Confirm privacy consent dialog
+
+### Privacy & Security
+- **API keys stored encrypted** using Flutter Secure Storage
+- **Explicit consent required** before enabling remote mode
+- **Clear privacy notices** when remote mode is active
+- **Automatic fallback** to local model if remote fails
+- **Easy disable/clear** - remove API key anytime
+
+### Usage
+- Chat shows current mode: "Mode: On-device" or "Mode: Remote"
+- Remote failures automatically fall back to local processing
+- Benchmarks always use local models regardless of remote setting
+
 ## 🔒 Privacy & Security
 
-- **100% Local Processing**: No data leaves your device
-- **Encrypted Storage**: Chat history secured with encryption
-- **No Network Calls**: Completely offline operation
+- **100% Local Processing**: Default mode - no data leaves your device
+- **Encrypted Storage**: Chat history and API keys secured with encryption
+- **No Network Calls**: Completely offline operation by default
+- **Optional Remote**: Explicit opt-in with clear privacy implications
 - **Open Source**: Transparent and auditable code
 
 ## 🤝 Contributing

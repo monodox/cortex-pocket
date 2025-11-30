@@ -11,6 +11,10 @@ class ConfigStore {
     _prefs = await SharedPreferences.getInstance();
   }
 
+  // Remote API settings
+  bool get useRemote => _prefs.getBool('use_remote') ?? false;
+  set useRemote(bool value) => _prefs.setBool('use_remote', value);
+
   // Model settings
   String get modelPath => _prefs.getString('model_path') ?? '/storage/models/';
   set modelPath(String value) => _prefs.setString('model_path', value);
@@ -48,5 +52,22 @@ class ConfigStore {
 
   Future<void> reset() async {
     await _prefs.clear();
+  }
+
+  // Legacy methods for backward compatibility
+  static Future<void> setUseRemote(bool useRemote) async {
+    final instance = ConfigStore();
+    if (!instance._prefs.containsKey('model_path')) {
+      await instance.initialize();
+    }
+    instance.useRemote = useRemote;
+  }
+
+  static Future<bool> getUseRemote() async {
+    final instance = ConfigStore();
+    if (!instance._prefs.containsKey('model_path')) {
+      await instance.initialize();
+    }
+    return instance.useRemote;
   }
 }

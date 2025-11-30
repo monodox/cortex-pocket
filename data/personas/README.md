@@ -62,3 +62,11 @@ The persona system integrates with:
 - **Remote API prompting**: Apply system prompts to API calls
 - **UI persona selection**: Display persona information in the app
 - **Context switching**: Maintain persona consistency across conversations
+
+## Related Data Files
+
+For comprehensive app information, see:
+- `../app_info.json` - App features, platforms, and screens
+- `../models.json` - Supported models and recommendations
+- `../faq.json` - Frequently asked questions and troubleshooting
+- `../guide.json` - Cortex Guide persona for app assistance

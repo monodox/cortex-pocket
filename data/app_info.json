@@ -1,0 +1,142 @@
+{
+  "name": "Cortex Pocket",
+  "version": "1.0.0",
+  "description": "On-device AI powered by optimized local LLMs",
+  "tagline": "Powerful offline LLM capabilities for fast, private AI assistance",
+  "features": [
+    {
+      "icon": "🔒",
+      "title": "Fully Offline",
+      "description": "No cloud dependency, complete privacy by default"
+    },
+    {
+      "icon": "⚡",
+      "title": "Real-time Generation",
+      "description": "Token-by-token response streaming"
+    },
+    {
+      "icon": "📱",
+      "title": "Optimized Performance",
+      "description": "Arm-optimized for mobile devices"
+    },
+    {
+      "icon": "🛡️",
+      "title": "Secure Conversations",
+      "description": "All processing happens locally"
+    },
+    {
+      "icon": "💻",
+      "title": "Code Assistance",
+      "description": "Built-in support for code analysis"
+    },
+    {
+      "icon": "🧠",
+      "title": "Smart Reasoning",
+      "description": "Advanced on-device intelligence"
+    },
+    {
+      "icon": "🎭",
+      "title": "Multiple Personas",
+      "description": "Developer, Security, Writer, Analyst modes"
+    },
+    {
+      "icon": "📊",
+      "title": "Performance Monitoring",
+      "description": "Real-time benchmarks and metrics"
+    },
+    {
+      "icon": "📁",
+      "title": "File Analysis",
+      "description": "Support for logs, code, and text files"
+    },
+    {
+      "icon": "☁️",
+      "title": "Optional Remote API",
+      "description": "Secure cloud fallback with API key encryption"
+    }
+  ],
+  "platforms": {
+    "android": {
+      "supported": true,
+      "primary": true,
+      "features": ["Local models", "Remote API", "Full FFI support"]
+    },
+    "ios": {
+      "supported": true,
+      "primary": false,
+      "features": ["Local models", "Remote API", "Native performance"]
+    },
+    "web": {
+      "supported": true,
+      "primary": false,
+      "features": ["Remote API only", "No local models", "Cross-browser"]
+    },
+    "linux": {
+      "supported": true,
+      "primary": false,
+      "features": ["Local models", "Remote API", "Desktop optimization"]
+    },
+    "macos": {
+      "supported": true,
+      "primary": false,
+      "features": ["Local models", "Remote API", "Native macOS"]
+    },
+    "windows": {
+      "supported": true,
+      "primary": false,
+      "features": ["Local models", "Remote API", "Windows integration"]
+    }
+  },
+  "screens": [
+    {
+      "route": "/",
+      "name": "Splash",
+      "description": "Loading & initialization"
+    },
+    {
+      "route": "/home",
+      "name": "Home",
+      "description": "Main dashboard"
+    },
+    {
+      "route": "/chat",
+      "name": "Chat",
+      "description": "AI conversation interface"
+    },
+    {
+      "route": "/models",
+      "name": "Models",
+      "description": "Model selection & management"
+    },
+    {
+      "route": "/personas",
+      "name": "Personas",
+      "description": "AI personality selection"
+    },
+    {
+      "route": "/file-reasoning",
+      "name": "File Analysis",
+      "description": "Document processing"
+    },
+    {
+      "route": "/benchmark",
+      "name": "Benchmarks",
+      "description": "Performance metrics"
+    },
+    {
+      "route": "/history",
+      "name": "History",
+      "description": "Chat session management"
+    },
+    {
+      "route": "/settings",
+      "name": "Settings",
+      "description": "App configuration"
+    },
+    {
+      "route": "/about",
+      "name": "About",
+      "description": "App information"
+    }
+  ]
+}

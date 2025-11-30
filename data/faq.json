@@ -1,0 +1,106 @@
+{
+  "categories": [
+    {
+      "name": "Getting Started",
+      "questions": [
+        {
+          "question": "What is Cortex Pocket?",
+          "answer": "Cortex Pocket is an on-device AI assistant powered by optimized local LLMs. It provides powerful AI capabilities while keeping all your data private and secure on your device. You can chat with different AI personas, analyze documents, and get assistance with coding, writing, security, and data analysis - all without sending data to the cloud."
+        },
+        {
+          "question": "How do I get started with Cortex Pocket?",
+          "answer": "1. Install the app on your device\n2. Choose between Local Mode (download models) or Remote Mode (API keys)\n3. For Local Mode: Go to Models screen and download a model like Llama 3.2 3B\n4. For Remote Mode: Go to Settings → Remote API and add your Gemini or OpenAI key\n5. Select a persona (Developer, Security, Writer, Analyst) and start chatting!"
+        },
+        {
+          "question": "Which platforms are supported?",
+          "answer": "Cortex Pocket works on:\n• Android (Primary platform with full features)\n• iOS (Full native support)\n• Web (Remote API only, no local models)\n• Linux Desktop\n• macOS\n• Windows\n\nLocal models work on all native platforms. Web version requires Remote API configuration."
+        }
+      ]
+    },
+    {
+      "name": "Local Models",
+      "questions": [
+        {
+          "question": "How do I download and install local models?",
+          "answer": "1. Go to Models screen in the app\n2. Tap the download icon to browse available models\n3. Choose a model (Llama 3.2 3B recommended for most devices)\n4. Tap 'Download from HuggingFace' to open the model page\n5. Download the .gguf file for your preferred quantization (Q4 recommended)\n6. Place the file in your app's assets/models/ directory\n7. Return to the app and load the model"
+        },
+        {
+          "question": "Which model should I choose for my device?",
+          "answer": "Model recommendations by device:\n\n**High-end phones (8GB+ RAM):**\n• Llama 3.2 3B (Q4) - Best overall performance\n• CodeLlama 7B (Q4) - For coding tasks\n\n**Mid-range devices (4-8GB RAM):**\n• Phi-3.5 Mini (Q4) - Balanced performance\n• Qwen2.5 3B (Q4) - Good for multilingual\n\n**Low-end devices (2-4GB RAM):**\n• Gemma 2 2B (Q4) - Lightweight and efficient\n• Any model with Q3 quantization"
+        },
+        {
+          "question": "What are quantization levels (Q3, Q4, Q6, Q8)?",
+          "answer": "Quantization reduces model size and memory usage:\n\n• **Q8**: Highest quality, largest size, slowest\n• **Q6**: High quality, good balance\n• **Q4**: Recommended balance of quality and performance\n• **Q3**: Smallest size, fastest, lower quality\n\nQ4 is recommended for most users as it provides good quality while being efficient on mobile devices."
+        },
+        {
+          "question": "My model won't load. What should I do?",
+          "answer": "Common solutions:\n\n1. **Check file location**: Ensure .gguf file is in assets/models/\n2. **Verify file integrity**: Re-download if corrupted\n3. **Free up memory**: Close other apps, try smaller quantization\n4. **Check compatibility**: Web platform doesn't support local models\n5. **Try different model**: Start with Gemma 2 2B Q3 for testing\n6. **Restart app**: Sometimes helps with memory issues\n\nIf issues persist, use Remote API as backup or report the issue with your device details."
+        }
+      ]
+    },
+    {
+      "name": "Remote API",
+      "questions": [
+        {
+          "question": "How do I set up Remote API?",
+          "answer": "1. Go to Settings → Remote API\n2. Enter your API key:\n   • Gemini: Starts with 'AIza...'\n   • OpenAI: Starts with 'sk-...'\n3. Tap 'Save & Test' to validate\n4. Enable 'Use Remote API' toggle\n5. Confirm privacy consent dialog\n\nYour API key is encrypted and stored securely on your device."
+        },
+        {
+          "question": "Which API providers are supported?",
+          "answer": "Supported providers:\n\n**Google Gemini API:**\n• gemini-2.5-flash (Default)\n• gemini-2.5-pro\n• gemini-2.5-flash-lite\n• gemini-3-pro-preview\n\n**OpenAI API:**\n• gpt-3.5-turbo\n• gpt-4\n• gpt-4-turbo\n\nThe app automatically detects your provider based on the API key format."
+        },
+        {
+          "question": "Is my data safe when using Remote API?",
+          "answer": "Remote API safety measures:\n\n**Our Protection:**\n• API keys encrypted in device keychain\n• HTTPS-only communication\n• No conversation storage on our servers\n• Explicit consent required\n\n**Provider Policies:**\n• Subject to Gemini/OpenAI terms\n• Data may be processed by providers\n• Check provider privacy policies\n\n**Recommendation:** Use Local Mode for maximum privacy, Remote API for enhanced capabilities when needed."
+        }
+      ]
+    },
+    {
+      "name": "Personas",
+      "questions": [
+        {
+          "question": "What are personas and how do they work?",
+          "answer": "Personas are specialized AI assistants with different expertise:\n\n👨‍💻 **Developer**: Coding help, debugging, architecture advice\n🔒 **Security Expert**: Security reviews, vulnerability assessment\n✍️ **Technical Writer**: Documentation, tutorials, clear explanations\n📊 **Data Analyst**: Performance analysis, metrics, insights\n🎯 **Cortex Guide**: App help and troubleshooting\n\nEach persona has specialized training and responds in their area of expertise."
+        },
+        {
+          "question": "When should I use each persona?",
+          "answer": "**Choose persona based on your task:**\n\n• **Developer**: Writing code, debugging, Flutter/Dart questions\n• **Security Expert**: Code security reviews, encryption, best practices\n• **Technical Writer**: Creating documentation, explaining concepts clearly\n• **Data Analyst**: App metrics, performance analysis, data insights\n• **Cortex Guide**: App features, setup help, troubleshooting\n\nYou can switch personas anytime during conversations for different perspectives."
+        }
+      ]
+    },
+    {
+      "name": "Privacy & Security",
+      "questions": [
+        {
+          "question": "How does Cortex Pocket protect my privacy?",
+          "answer": "**Local Mode (Default):**\n• 100% offline processing\n• No data leaves your device\n• No telemetry or tracking\n• Encrypted local storage\n\n**Remote Mode (Optional):**\n• Explicit opt-in required\n• API keys encrypted in device keychain\n• HTTPS-only communication\n• Clear privacy notices\n\n**Always:**\n• Open source code for transparency\n• No user data collection\n• Complete user control"
+        },
+        {
+          "question": "Where is my chat history stored?",
+          "answer": "**Local Storage:**\n• All chats stored encrypted on your device\n• Never uploaded to cloud servers\n• Accessible only through the app\n• Can be deleted anytime\n\n**Management:**\n• View all chats in History screen\n• Delete individual conversations\n• Clear all history in Settings\n• Resume previous conversations\n\n**Security:** Chat data is encrypted using platform-specific secure storage."
+        },
+        {
+          "question": "Can I use Cortex Pocket completely offline?",
+          "answer": "**Yes! Local Mode is completely offline:**\n\n✅ **No internet required** after initial model download\n✅ **All processing on-device** using local models\n✅ **No network calls** during conversations\n✅ **Complete privacy** - data never leaves device\n\n**Setup for offline use:**\n1. Download models while connected to internet\n2. Place model files in assets/models/\n3. Disable Remote API in settings\n4. Enjoy fully offline AI assistance\n\nPerfect for privacy-conscious users or areas with limited connectivity."
+        }
+      ]
+    },
+    {
+      "name": "Troubleshooting",
+      "questions": [
+        {
+          "question": "The app is running slowly. How can I improve performance?",
+          "answer": "**Performance optimization tips:**\n\n1. **Choose appropriate model**: Use smaller models (Gemma 2B) or lower quantization (Q3)\n2. **Free up memory**: Close other apps before using Cortex Pocket\n3. **Check device specs**: Ensure sufficient RAM for your chosen model\n4. **Use Remote API**: For instant responses without local processing\n5. **Restart app**: Clears memory and resets performance\n6. **Update app**: Latest versions include performance improvements\n\n**Model recommendations for better performance:**\n• Gemma 2 2B Q3 - Fastest local option\n• Remote API - No local processing overhead"
+        },
+        {
+          "question": "I'm getting network errors with Remote API. What should I do?",
+          "answer": "**Network troubleshooting steps:**\n\n1. **Check internet connection**: Ensure stable connectivity\n2. **Verify API key**: Test key validity in Settings\n3. **Check API limits**: Ensure you haven't exceeded rate limits\n4. **Try different network**: Switch between WiFi/mobile data\n5. **Update API key**: Generate new key if expired\n6. **Use local fallback**: App automatically falls back to local models\n\n**Smart fallback**: Remote failures automatically use local models if available, ensuring uninterrupted service."
+        },
+        {
+          "question": "How do I report bugs or request features?",
+          "answer": "**Bug Reports:**\n• GitHub Issues for public discussion\n• Include device info, steps to reproduce, screenshots\n• Check existing issues first\n\n**Feature Requests:**\n• Describe use case and benefits\n• Consider implementation complexity\n• Engage with community discussion\n\n**Security Issues:**\n• Use private security advisory on GitHub\n• Email: security@cortex-pocket.dev\n• Do not report publicly\n\n**General Help:**\n• Use Cortex Guide persona in the app\n• Check documentation and FAQ\n• Community discussions on GitHub"
+        }
+      ]
+    }
+  ]
+}

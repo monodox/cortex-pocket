@@ -200,6 +200,36 @@ class _ChatScreenState extends State<ChatScreen> {
           ],
         ),
         actions: [
+          // Mode switch toggle
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.offline_bolt,
+                size: 16,
+                color: !_llmService.useRemote ? Colors.green : Colors.grey,
+              ),
+              Switch(
+                value: _llmService.useRemote,
+                onChanged: _llmService.hasApiKey ? (value) {
+                  _llmService.setUseRemote(value);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        'Switched to ${value ? "Remote" : "Local"} mode'
+                      ),
+                    ),
+                  );
+                } : null,
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              ),
+              Icon(
+                Icons.cloud,
+                size: 16,
+                color: _llmService.useRemote ? Colors.blue : Colors.grey,
+              ),
+            ],
+          ),
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: () {
@@ -210,20 +240,6 @@ class _ChatScreenState extends State<ChatScreen> {
             },
             tooltip: 'New Chat',
           ),
-          if (_llmService.useRemote && _llmService.hasApiKey)
-            PopupMenuButton<String>(
-              icon: const Icon(Icons.tune),
-              onSelected: (model) {
-                _llmService.setSelectedModel(model);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Model switched to $model')),
-                );
-              },
-              itemBuilder: (context) => _llmService.availableModels.map((model) => PopupMenuItem(
-                value: model['id'],
-                child: Text(model['name']!),
-              )).toList(),
-            ),
           IconButton(
             icon: const Icon(Icons.person),
             onPressed: () => Navigator.pushNamed(context, Routes.personas),

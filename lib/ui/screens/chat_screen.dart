@@ -4,6 +4,7 @@ import '../../models/message.dart';
 import '../../services/llm_service.dart';
 import '../../core/routes.dart';
 import '../widgets/message_bubble.dart';
+import '../../data/storage/chat_store.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -17,13 +18,47 @@ class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _controller = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   final LLMService _llmService = LLMService();
+  final ChatStore _chatStore = ChatStore();
   bool _isGenerating = false;
+  String? _currentSessionId;
 
   @override
   void initState() {
     super.initState();
     _initializeService();
     _llmService.addListener(_onServiceChanged);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _loadSessionFromArguments();
+  }
+
+  void _loadSessionFromArguments() async {
+    final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    if (args != null && args['sessionId'] != null) {
+      final sessionId = args['sessionId'] as String;
+      await _loadChatSession(sessionId);
+    } else {
+      _startNewSession();
+    }
+  }
+
+  void _startNewSession() {
+    _currentSessionId = _chatStore.generateSessionId();
+    _chatStore.setCurrentSessionId(_currentSessionId);
+  }
+
+  Future<void> _loadChatSession(String sessionId) async {
+    _currentSessionId = sessionId;
+    await _chatStore.setCurrentSessionId(sessionId);
+    final messages = await _chatStore.loadChat(sessionId);
+    setState(() {
+      _messages.clear();
+      _messages.addAll(messages);
+    });
+    _scrollToBottom();
   }
 
   @override
@@ -37,10 +72,20 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Future<void> _initializeService() async {
+    await _chatStore.initialize();
     await _llmService.initialize();
     if (!_llmService.useRemote) {
       await _llmService.loadModel('cortex-7b-q4');
     }
+    
+    // Load current session if exists
+    final currentSessionId = _chatStore.getCurrentSessionId();
+    if (currentSessionId != null) {
+      await _loadChatSession(currentSessionId);
+    } else {
+      _startNewSession();
+    }
+    
     setState(() {});
   }
 
@@ -94,6 +139,11 @@ class _ChatScreenState extends State<ChatScreen> {
           timestamp: aiMessage.timestamp,
         );
       });
+    }
+
+    // Save chat after each exchange
+    if (_currentSessionId != null) {
+      await _chatStore.saveChat(_currentSessionId!, _messages);
     }
 
     setState(() {
@@ -181,6 +231,16 @@ class _ChatScreenState extends State<ChatScreen> {
           ],
         ),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () {
+              _startNewSession();
+              setState(() {
+                _messages.clear();
+              });
+            },
+            tooltip: 'New Chat',
+          ),
           if (_llmService.useRemote && _llmService.hasApiKey)
             PopupMenuButton<String>(
               icon: const Icon(Icons.tune),

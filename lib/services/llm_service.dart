@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
-import '../ffi/llama_bridge.dart';
+import '../ffi/llama_bridge_io.dart' if (dart.library.html) '../ffi/llama_bridge_web.dart';
 import '../data/storage/api_key_store.dart';
 import '../data/storage/config_store.dart';
 import 'remote_api.dart';

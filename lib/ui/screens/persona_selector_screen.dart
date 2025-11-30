@@ -21,9 +21,9 @@ class _PersonaSelectorScreenState extends State<PersonaSelectorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Select Persona')),
+      appBar: AppBar(title: const Text('Select Persona')),
       body: ListView.builder(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         itemCount: personas.length,
         itemBuilder: (context, index) {
           final persona = personas[index];
@@ -43,7 +43,7 @@ class _PersonaSelectorScreenState extends State<PersonaSelectorScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.pop(context, selectedPersona),
-        child: Icon(Icons.check),
+        child: const Icon(Icons.check),
       ),
     );
   }

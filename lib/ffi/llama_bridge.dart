@@ -18,11 +18,11 @@ class LlamaBridge {
 
       final params = calloc<LlamaContextParams>();
       params.ref.seed = -1;
-      params.ref.n_ctx = 2048;
-      params.ref.n_batch = 512;
-      params.ref.n_threads = 4;
+      params.ref.nCtx = 2048;
+      params.ref.nBatch = 512;
+      params.ref.nThreads = 4;
       params.ref.temperature = 0.7;
-      params.ref.top_p = 0.9;
+      params.ref.topP = 0.9;
 
       _context = LlamaFFI.newContext(_model!, params.ref);
       malloc.free(params);
@@ -45,7 +45,7 @@ class LlamaBridge {
         final result = LlamaFFI.eval(_context!);
         if (result != 0) break;
         
-        await Future.delayed(Duration(milliseconds: 50));
+        await Future.delayed(const Duration(milliseconds: 50));
         yield 'token_$i ';
       }
     } catch (e) {

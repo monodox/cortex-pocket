@@ -17,7 +17,7 @@ class _FileReasoningScreenState extends State<FileReasoningScreen> {
     
     setState(() => _isAnalyzing = true);
     
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
     
     setState(() {
       _analysis = 'Analysis: This appears to be ${_textController.text.length > 100 ? 'a complex document' : 'a simple text'}. Key insights: Structure is well-organized, contains technical content.';
@@ -29,16 +29,16 @@ class _FileReasoningScreenState extends State<FileReasoningScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('File Reasoning'),
+        title: const Text('File Reasoning'),
         actions: [
           IconButton(
-            icon: Icon(Icons.file_upload),
+            icon: const Icon(Icons.file_upload),
             onPressed: () {},
           ),
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             Expanded(
@@ -47,19 +47,19 @@ class _FileReasoningScreenState extends State<FileReasoningScreen> {
                 controller: _textController,
                 maxLines: null,
                 expands: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Paste your text, code, or logs here...',
                   border: OutlineInputBorder(),
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: _isAnalyzing ? null : _analyzeText,
                 child: _isAnalyzing 
-                  ? Row(
+                  ? const Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2)),
@@ -67,14 +67,14 @@ class _FileReasoningScreenState extends State<FileReasoningScreen> {
                         Text('Analyzing...'),
                       ],
                     )
-                  : Text('Analyze'),
+                  : const Text('Analyze'),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Expanded(
               child: Container(
                 width: double.infinity,
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey),
                   borderRadius: BorderRadius.circular(8),

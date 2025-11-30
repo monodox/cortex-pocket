@@ -48,7 +48,7 @@ class _ChatScreenState extends State<ChatScreen> {
     _scrollToBottom();
 
     final aiMessage = Message(
-      id: DateTime.now().millisecondsSinceEpoch.toString() + '_ai',
+      id: '${DateTime.now().millisecondsSinceEpoch}_ai',
       content: '',
       isUser: false,
       timestamp: DateTime.now(),

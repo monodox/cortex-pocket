@@ -9,10 +9,10 @@ class HistoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Chat History'),
+        title: const Text('Chat History'),
         actions: [
           IconButton(
-            icon: Icon(Icons.delete_sweep),
+            icon: const Icon(Icons.delete_sweep),
             onPressed: () => _showClearDialog(context),
           ),
         ],
@@ -22,41 +22,40 @@ class HistoryScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.history, size: 64, color: Colors.grey),
-                SizedBox(height: 16),
-                Text('No chat history yet', style: TextStyle(fontSize: 18, color: Colors.grey)),
-                SizedBox(height: 8),
+                const Icon(Icons.history, size: 64, color: Colors.grey),
+                const SizedBox(height: 16),
+                const Text('No chat history yet', style: TextStyle(fontSize: 18, color: Colors.grey)),
+                const SizedBox(height: 8),
                 Text('Start a conversation to see your chat history here', style: TextStyle(color: Colors.grey[600])),
               ],
             ),
           )
         : ListView.builder(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             itemCount: chatSessions.length,
             itemBuilder: (context, index) {
               final session = chatSessions[index];
               return Card(
                 child: ListTile(
-                  leading: Icon(Icons.chat_bubble_outline),
+                  leading: const Icon(Icons.chat_bubble_outline),
                   title: Text(session['title']),
                   subtitle: Text('${session['date']} • ${session['messages']} messages'),
                   trailing: PopupMenuButton(
-                    itemBuilder: (context) => [
-                      PopupMenuItem(child: Text('Open'), value: 'open'),
-                      PopupMenuItem(child: Text('Delete'), value: 'delete'),
-                    ],
                     onSelected: (value) {
                       if (value == 'delete') {
                         _showDeleteDialog(context, session['title']);
                       }
                     },
+                    itemBuilder: (context) => [
+                      const PopupMenuItem(value: 'open', child: Text('Open')),
+                      const PopupMenuItem(value: 'delete', child: Text('Delete')),
+                    ],
                   ),
                   onTap: () {},
                 ),
               );
             },
           ),
-      ),
     );
   }
 
@@ -64,11 +63,11 @@ class HistoryScreen extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Clear All History'),
-        content: Text('This will permanently delete all chat sessions.'),
+        title: const Text('Clear All History'),
+        content: const Text('This will permanently delete all chat sessions.'),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: Text('Cancel')),
-          TextButton(onPressed: () => Navigator.pop(context), child: Text('Clear')),
+          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Clear')),
         ],
       ),
     );
@@ -78,11 +77,11 @@ class HistoryScreen extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Delete Session'),
+        title: const Text('Delete Session'),
         content: Text('Delete "$title"?'),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: Text('Cancel')),
-          TextButton(onPressed: () => Navigator.pop(context), child: Text('Delete')),
+          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Delete')),
         ],
       ),
     );

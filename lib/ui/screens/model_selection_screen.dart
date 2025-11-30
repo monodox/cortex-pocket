@@ -16,14 +16,14 @@ class _ModelSelectionScreenState extends State<ModelSelectionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Model Selection')),
+      appBar: AppBar(title: const Text('Model Selection')),
       body: Column(
         children: [
           Padding(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             child: Row(
               children: [
-                Text('Quantization: '),
+                const Text('Quantization: '),
                 DropdownButton<String>(
                   value: selectedQuantization,
                   items: ['Q8', 'Q6', 'Q4', 'Q3'].map((q) => 
@@ -40,10 +40,10 @@ class _ModelSelectionScreenState extends State<ModelSelectionScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.memory, size: 64, color: Colors.grey),
-                      SizedBox(height: 16),
-                      Text('No models available', style: TextStyle(fontSize: 18, color: Colors.grey)),
-                      SizedBox(height: 8),
+                      const Icon(Icons.memory, size: 64, color: Colors.grey),
+                      const SizedBox(height: 16),
+                      const Text('No models available', style: TextStyle(fontSize: 18, color: Colors.grey)),
+                      const SizedBox(height: 8),
                       Text('Add model files to assets/models/ directory', style: TextStyle(color: Colors.grey[600])),
                     ],
                   ),
@@ -57,8 +57,8 @@ class _ModelSelectionScreenState extends State<ModelSelectionScreen> {
                       title: Text(model['name']),
                       subtitle: Text('Size: ${model['size']} ($selectedQuantization)'),
                       trailing: model['loaded'] 
-                        ? TextButton(onPressed: () {}, child: Text('Unload'))
-                        : TextButton(onPressed: () {}, child: Text('Load')),
+                        ? TextButton(onPressed: () {}, child: const Text('Unload'))
+                        : TextButton(onPressed: () {}, child: const Text('Load')),
                       onTap: () => setState(() => selectedModel = model['name']),
                       selected: selectedModel == model['name'],
                     );

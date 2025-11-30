@@ -8,19 +8,19 @@ base class LlamaContextParams extends Struct {
   external int seed;
   
   @Uint32()
-  external int n_ctx;
+  external int nCtx;
   
   @Uint32()
-  external int n_batch;
+  external int nBatch;
   
   @Uint32()
-  external int n_threads;
+  external int nThreads;
   
   @Float()
   external double temperature;
   
   @Float()
-  external double top_p;
+  external double topP;
 }
 
 base class LlamaToken extends Struct {

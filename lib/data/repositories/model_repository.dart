@@ -33,20 +33,20 @@ class ModelRepository {
   ModelRepository._internal();
 
   final List<ModelInfo> _availableModels = [
-    ModelInfo(
+    const ModelInfo(
       name: 'Llama-2-7B',
       filename: 'llama-2-7b-chat',
       size: '3.5GB',
       quantizations: ['Q8', 'Q6', 'Q4', 'Q3'],
     ),
-    ModelInfo(
+    const ModelInfo(
       name: 'CodeLlama-7B',
       filename: 'codellama-7b-instruct',
       size: '3.8GB',
       quantizations: ['Q8', 'Q6', 'Q4', 'Q3'],
       isLoaded: true,
     ),
-    ModelInfo(
+    const ModelInfo(
       name: 'Mistral-7B',
       filename: 'mistral-7b-instruct',
       size: '4.1GB',
@@ -54,7 +54,7 @@ class ModelRepository {
     ),
   ];
 
-  List<ModelInfo> _loadedModels = [];
+  final List<ModelInfo> _loadedModels = [];
 
   List<ModelInfo> getAvailableModels() => List.unmodifiable(_availableModels);
   List<ModelInfo> getLoadedModels() => List.unmodifiable(_loadedModels);

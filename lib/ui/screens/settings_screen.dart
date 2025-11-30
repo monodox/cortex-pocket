@@ -10,51 +10,51 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   bool _darkMode = false;
-  String _modelPath = '/storage/models/';
+  final String _modelPath = '/storage/models/';
   double _cacheSize = 2.1;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Settings')),
+      appBar: AppBar(title: const Text('Settings')),
       body: ListView(
         children: [
           ListTile(
-            leading: Icon(Icons.folder),
-            title: Text('Model Storage Path'),
+            leading: const Icon(Icons.folder),
+            title: const Text('Model Storage Path'),
             subtitle: Text(_modelPath),
             onTap: () {},
           ),
           ListTile(
-            leading: Icon(Icons.storage),
-            title: Text('Cache Size'),
+            leading: const Icon(Icons.storage),
+            title: const Text('Cache Size'),
             subtitle: Text('${_cacheSize.toStringAsFixed(1)} GB'),
             trailing: TextButton(
               onPressed: () => setState(() => _cacheSize = 0),
-              child: Text('Clear'),
+              child: const Text('Clear'),
             ),
           ),
           SwitchListTile(
-            secondary: Icon(Icons.dark_mode),
-            title: Text('Dark Mode'),
+            secondary: const Icon(Icons.dark_mode),
+            title: const Text('Dark Mode'),
             value: _darkMode,
             onChanged: (value) => setState(() => _darkMode = value),
           ),
-          ListTile(
+          const ListTile(
             leading: Icon(Icons.privacy_tip),
             title: Text('Privacy Settings'),
             subtitle: Text('All processing is local'),
             trailing: Icon(Icons.check_circle, color: Colors.green),
           ),
-          Divider(),
+          const Divider(),
           ListTile(
-            leading: Icon(Icons.info),
-            title: Text('About'),
+            leading: const Icon(Icons.info),
+            title: const Text('About'),
             onTap: () => Navigator.pushNamed(context, Routes.about),
           ),
           ListTile(
-            leading: Icon(Icons.bug_report),
-            title: Text('Report Issue'),
+            leading: const Icon(Icons.bug_report),
+            title: const Text('Report Issue'),
             onTap: () {},
           ),
         ],

@@ -192,42 +192,11 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
+        title: const Row(
           children: [
-            const Icon(Icons.psychology, color: Colors.blue),
-            const SizedBox(width: 8),
-            const Text('Cortex Pocket'),
-            const Spacer(),
-            Row(
-              children: [
-                Icon(
-                  Icons.offline_bolt,
-                  size: 16,
-                  color: !_llmService.useRemote ? Colors.green : Colors.grey,
-                ),
-                const SizedBox(width: 4),
-                Switch(
-                  value: _llmService.useRemote,
-                  onChanged: _llmService.hasApiKey ? (value) {
-                    _llmService.setUseRemote(value);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          'Switched to ${value ? "Remote" : "Local"} mode'
-                        ),
-                      ),
-                    );
-                  } : null,
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                ),
-                const SizedBox(width: 4),
-                Icon(
-                  Icons.cloud,
-                  size: 16,
-                  color: _llmService.useRemote ? Colors.blue : Colors.grey,
-                ),
-              ],
-            ),
+            Icon(Icons.psychology, color: Colors.blue),
+            SizedBox(width: 8),
+            Text('Cortex Pocket'),
           ],
         ),
         actions: [

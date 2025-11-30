@@ -1,156 +1,146 @@
-# Contributing to Cortex AI
+# Contributing to Cortex Pocket
 
-Thank you for your interest in contributing to Cortex AI! This document provides guidelines for contributing to the project.
+Thank you for your interest in contributing to Cortex Pocket! This document provides guidelines for contributing to the project.
 
-## 🚀 Getting Started
+## Getting Started
 
-### Prerequisites
-- Flutter 3.10+
-- Dart 3.0+
-- Git
-- Android Studio / VS Code
+1. **Fork the repository** on GitHub
+2. **Clone your fork** locally
+3. **Create a branch** for your feature or bug fix
+4. **Make your changes** following our coding standards
+5. **Test your changes** thoroughly
+6. **Submit a pull request**
 
-### Setup Development Environment
-1. Fork the repository
-2. Clone your fork: `git clone https://github.com/yourusername/cortex.git`
-3. Install dependencies: `flutter pub get`
-4. Create a branch: `git checkout -b feature/your-feature`
+## Development Setup
 
-## 📝 How to Contribute
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/cortex-pocket.git
+cd cortex-pocket
 
-### Types of Contributions
-- 🐛 Bug fixes
-- ✨ New features
-- 📚 Documentation improvements
-- 🎨 UI/UX enhancements
-- ⚡ Performance optimizations
-- 🧪 Tests
+# Install dependencies
+flutter pub get
 
-### Before You Start
-1. Check existing issues and PRs
-2. Create an issue for new features
-3. Discuss major changes first
-4. Follow coding standards
+# Run the app (native platforms)
+flutter run
 
-## 🔧 Development Guidelines
+# Run on web (requires Remote API)
+flutter run -d chrome
+```
 
-### Code Style
-- Follow Dart/Flutter conventions
-- Use meaningful variable names
+### Platform-Specific Setup
+
+**Native Platforms (Android/iOS/Desktop):**
+- FFI support for local LLM integration
+- Model files in `assets/models/` directory
+- Native compilation for llama.cpp bindings
+
+**Web Platform:**
+- Remote API only (no local models)
+- Configure API keys for testing
+- CORS considerations for development
+
+## Coding Standards
+
+- Follow [Dart style guide](https://dart.dev/guides/language/effective-dart/style)
+- Use meaningful variable and function names
 - Add comments for complex logic
-- Keep functions small and focused
+- Ensure code is properly formatted (`dart format .`)
+- Run linter (`flutter analyze`)
 
-### Commit Messages
-```
-type(scope): description
+## Pull Request Process
 
-feat(chat): add message encryption
-fix(ui): resolve theme switching bug
-docs(readme): update installation steps
-```
+1. **Update documentation** if needed
+2. **Add tests** for new functionality
+3. **Ensure all tests pass**
+4. **Update CHANGELOG.md** with your changes
+5. **Request review** from maintainers
 
-### Testing
-- Write tests for new features
-- Ensure existing tests pass
-- Test on multiple devices/platforms
-- Verify performance impact
+## Types of Contributions
 
-## 📋 Pull Request Process
+- **Bug fixes**: Fix existing issues
+- **Features**: Add new functionality
+- **Documentation**: Improve docs and examples
+- **Performance**: Optimize existing code
+- **Tests**: Add or improve test coverage
+- **Model Integration**: Add support for new LLM models
+- **Platform Support**: Improve cross-platform compatibility
+- **Security**: Enhance privacy and security features
+- **UI/UX**: Improve user interface and experience
 
-1. **Create PR** with clear title and description
-2. **Link Issues** that the PR addresses
-3. **Add Screenshots** for UI changes
-4. **Update Documentation** if needed
-5. **Request Review** from maintainers
+## Reporting Issues
 
-### PR Checklist
-- [ ] Code follows project standards
-- [ ] Tests added/updated
-- [ ] Documentation updated
-- [ ] No breaking changes (or documented)
-- [ ] Performance tested
+When reporting bugs, please include:
 
-## 🏗️ Project Structure
+- **Device/Platform information**
+- **Steps to reproduce**
+- **Expected vs actual behavior**
+- **Screenshots** if applicable
+- **Logs/Error messages**
 
-```
-lib/
-├── core/           # Navigation & routing
-├── data/           # Storage & repositories  
-├── ffi/            # Native bindings
-├── models/         # Data models
-├── services/       # Business logic
-├── theme/          # UI theming
-├── ui/             # User interface
-├── utils/          # Helper utilities
-└── main.dart       # Entry point
-```
+## Feature Requests
 
-## 🎯 Areas for Contribution
+For new features:
 
-### High Priority
-- Native LLM integration
-- Performance optimizations
-- Additional model formats
-- Platform-specific features
+- **Check existing issues** first
+- **Describe the use case**
+- **Explain the benefit**
+- **Consider implementation complexity**
 
-### Medium Priority
-- UI improvements
-- Additional personas
-- Export/import features
-- Accessibility enhancements
+## Code Review
 
-### Documentation
-- Code documentation
-- User guides
-- API documentation
-- Architecture diagrams
+All submissions require review. We use GitHub pull requests for this purpose. Reviewers will check for:
 
-## 🐛 Bug Reports
+- Code quality and style
+- Test coverage
+- Documentation updates
+- Breaking changes
+- Performance impact
+- Privacy implications
+- Security considerations
+- Cross-platform compatibility
+- AI model integration quality
 
-### Include:
-- Flutter/Dart version
-- Device/OS information
-- Steps to reproduce
-- Expected vs actual behavior
-- Screenshots/logs
+## AI/LLM Specific Guidelines
 
-### Template:
-```markdown
-**Environment:**
-- Flutter: 3.10.0
-- Dart: 3.0.0
-- OS: Android 13
+### Model Integration
+- Test with multiple quantization levels (Q3, Q4, Q6, Q8)
+- Ensure memory efficiency for mobile devices
+- Document model requirements and performance
+- Follow responsible AI practices
 
-**Steps to Reproduce:**
-1. Open chat screen
-2. Send message
-3. Observe error
+### Privacy & Security
+- Maintain local-first architecture
+- Encrypt sensitive data (API keys, chat history)
+- No telemetry or tracking in local mode
+- Clear consent for remote API usage
 
-**Expected:** Message should send
-**Actual:** App crashes
-```
+### Performance Considerations
+- Optimize for mobile/edge devices
+- Memory usage monitoring
+- Battery life impact assessment
+- Streaming response implementation
 
-## 💡 Feature Requests
+## Testing Guidelines
 
-### Include:
-- Clear use case description
-- Proposed implementation
-- Alternative solutions considered
-- Impact on existing features
+### Local Model Testing
+- Test model loading and unloading
+- Verify quantization support
+- Memory leak detection
+- Performance benchmarking
 
-## 📞 Communication
+### Remote API Testing
+- API key validation
+- Network error handling
+- Fallback to local models
+- Rate limiting compliance
 
-- **Issues**: GitHub Issues for bugs/features
-- **Discussions**: GitHub Discussions for questions
-- **Security**: security@cortex-ai.dev for vulnerabilities
+### Cross-Platform Testing
+- Test on all supported platforms
+- Verify FFI compatibility
+- Web-specific limitations
+- Platform-specific UI adaptations
 
-## 🏆 Recognition
-
-Contributors will be:
-- Listed in CONTRIBUTORS.md
-- Mentioned in release notes
-- Credited in app about section
-
-## 📄 License
+## License
 
 By contributing, you agree that your contributions will be licensed under the MIT License.

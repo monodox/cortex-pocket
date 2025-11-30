@@ -105,7 +105,19 @@ class LLMService extends ChangeNotifier {
     }
 
     if (!_isModelLoaded) {
-      yield 'No model available.\n\nPlease:\n1. Load a local model in Settings → Models, or\n2. Configure remote API in Settings → Remote API';
+      yield '🤖 **No Local Model Installed**\n\n'
+            '**To use Local Mode:**\n'
+            '1. Go to **Models** screen\n'
+            '2. Tap **Browse Models** (download icon)\n'
+            '3. Choose a model (Gemma 2B recommended for most devices)\n'
+            '4. Tap **Download from HuggingFace**\n'
+            '5. Place the .gguf file in assets/models/\n'
+            '6. Return and load the model\n\n'
+            '**Quick Start Models:**\n'
+            '• **Gemma 2 2B** - Lightweight, fast\n'
+            '• **Llama 3.2 3B** - Balanced performance\n'
+            '• **Phi-3.5 Mini** - Efficient for coding\n\n'
+            '**Alternative:** Switch to Remote mode with API key';
       return;
     }
 

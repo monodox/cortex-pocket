@@ -91,48 +91,103 @@ lib/generated_plugin_registrant.dart
 # Coverage
 coverage/
 
-# Cortex AI specific
+# Cortex Pocket specific
 # Model files (too large for git)
 assets/models/*.gguf
 assets/models/*.bin
 assets/models/*.safetensors
+assets/models/*.pt
+assets/models/*.pth
 
-# Local storage
+# API Keys and secrets (NEVER commit these)
+*.key
+*.pem
+*.p12
+*.keystore
+api_keys.txt
+secrets.json
+config.json
+
+# Local storage and databases
 *.db
 *.sqlite
 *.sqlite3
+*.realm
 
-# Logs
+# Logs and debug files
 logs/
 *.log
+*.trace
+*.crash
 
-# Environment files
+# Environment and config files
 .env
 .env.local
 .env.production
+.env.development
+config.local.dart
 
-# Native libraries
+# Native libraries and binaries
 *.so
 *.dll
 *.dylib
+*.a
+*.lib
 
-# Temporary files
+# FFI generated files
+lib/ffi/generated/
+
+# Temporary and cache files
 tmp/
 temp/
 .tmp/
+cache/
+.cache/
 
-# IDE specific
+# IDE and editor specific
 .vscode/settings.json
 .vscode/launch.json
 *.code-workspace
+.fleet/
+.idea/workspace.xml
+.idea/tasks.xml
 
 # OS specific
 Thumbs.db
 ehthumbs.db
 Desktop.ini
 $RECYCLE.BIN/
+.Spotlight-V100
+.Trashes
 
-# Backup files
+# Backup and temporary files
 *.bak
 *.backup
+*.tmp
 *~
+*.swp
+*.swo
+
+# Build artifacts
+*.apk
+*.aab
+*.ipa
+*.app
+*.exe
+*.dmg
+*.deb
+*.rpm
+
+# Test coverage
+coverage/
+.nyc_output/
+lcov.info
+
+# Documentation build
+doc/api/
+docs/_build/
+
+# Profiling and performance
+*.prof
+*.trace
+profile.json

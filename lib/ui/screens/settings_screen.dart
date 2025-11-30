@@ -37,24 +37,39 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Future<void> _saveAndTestApiKey() async {
-    if (_apiKeyController.text.trim().isEmpty) return;
+    final apiKey = _apiKeyController.text.trim();
+    if (apiKey.isEmpty) {
+      setState(() => _testResult = 'Please enter an API key');
+      return;
+    }
     
     setState(() {
       _isTestingKey = true;
-      _testResult = null;
+      _testResult = 'Testing API key...';
     });
 
     try {
-      final isValid = await _llmService.testApiKey(_apiKeyController.text.trim());
+      // Basic format validation for multiple providers
+      bool isValidFormat = apiKey.startsWith('sk-') ||           // OpenAI
+                          apiKey.startsWith('AIza') ||          // Gemini
+                          apiKey.startsWith('gsk_') ||          // Groq
+                          apiKey.startsWith('anthropic-');      // Anthropic
+      
+      if (!isValidFormat || apiKey.length < 20) {
+        setState(() => _testResult = 'Invalid format: API key should start with sk-, AIza, gsk_, or anthropic-');
+        return;
+      }
+
+      final isValid = await _llmService.testApiKey(apiKey);
       if (isValid) {
-        await _llmService.saveApiKey(_apiKeyController.text.trim());
-        setState(() => _testResult = 'API key saved and validated successfully');
+        await _llmService.saveApiKey(apiKey);
+        setState(() => _testResult = 'API key saved successfully');
         _apiKeyController.clear();
       } else {
-        setState(() => _testResult = 'Invalid API key');
+        setState(() => _testResult = 'API key validation failed - check key and network');
       }
     } catch (e) {
-      setState(() => _testResult = 'Test failed: $e');
+      setState(() => _testResult = 'Test failed: ${e.toString()}');
     } finally {
       setState(() => _isTestingKey = false);
     }

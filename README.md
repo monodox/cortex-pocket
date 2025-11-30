@@ -24,7 +24,14 @@ On-device AI powered by optimized local LLMs. Cortex brings powerful offline LLM
 ### Prerequisites
 - Flutter 3.10+
 - Dart 3.0+
-- Android Studio / VS Code
+- Android Studio / VS Code / Xcode (for iOS)
+
+### Supported Platforms
+- 🤖 **Android** (Primary target)
+- 🍎 **iOS** 
+- 🐧 **Linux**
+- 🍎 **macOS**
+- 🪟 **Windows**
 
 ### Installation
 
@@ -41,7 +48,15 @@ flutter pub get
 
 3. **Run the app**
 ```bash
+# Android (default)
 flutter run
+
+# Specific platforms
+flutter run -d android
+flutter run -d ios
+flutter run -d linux
+flutter run -d macos
+flutter run -d windows
 ```
 
 ## 🏗️ Architecture

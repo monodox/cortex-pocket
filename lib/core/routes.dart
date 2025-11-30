@@ -9,6 +9,10 @@ import '../ui/screens/benchmark_screen.dart';
 import '../ui/screens/history_screen.dart';
 import '../ui/screens/settings_screen.dart';
 import '../ui/screens/about_screen.dart';
+import '../ui/screens/privacy_screen.dart';
+import '../ui/screens/terms_screen.dart';
+import '../ui/screens/cookies_screen.dart';
+import '../ui/screens/ai_disclaimer_screen.dart';
 
 class Routes {
   static const String splash = '/';
@@ -21,6 +25,10 @@ class Routes {
   static const String history = '/history';
   static const String settings = '/settings';
   static const String about = '/about';
+  static const String privacy = '/privacy';
+  static const String terms = '/terms';
+  static const String cookies = '/cookies';
+  static const String aiDisclaimer = '/ai-disclaimer';
 
   static Map<String, WidgetBuilder> routes = {
     splash: (context) => const SplashScreen(),
@@ -33,5 +41,9 @@ class Routes {
     history: (context) => const HistoryScreen(),
     settings: (context) => const SettingsScreen(),
     about: (context) => const AboutScreen(),
+    privacy: (context) => const PrivacyScreen(),
+    terms: (context) => const TermsScreen(),
+    cookies: (context) => const CookiesScreen(),
+    aiDisclaimer: (context) => const AiDisclaimerScreen(),
   };
 }

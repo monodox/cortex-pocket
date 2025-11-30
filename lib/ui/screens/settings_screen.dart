@@ -259,6 +259,32 @@ class _SettingsScreenState extends State<SettingsScreen> {
             subtitle: Text('Remote mode sends messages to external providers'),
           ),
           const Divider(),
+          const ListTile(
+            leading: Icon(Icons.gavel),
+            title: Text('Legal'),
+            subtitle: Text('Privacy, terms, and policies'),
+          ),
+          ListTile(
+            leading: const Icon(Icons.privacy_tip),
+            title: const Text('Privacy Policy'),
+            onTap: () => Navigator.pushNamed(context, Routes.privacy),
+          ),
+          ListTile(
+            leading: const Icon(Icons.description),
+            title: const Text('Terms of Use'),
+            onTap: () => Navigator.pushNamed(context, Routes.terms),
+          ),
+          ListTile(
+            leading: const Icon(Icons.cookie),
+            title: const Text('Cookie Policy'),
+            onTap: () => Navigator.pushNamed(context, Routes.cookies),
+          ),
+          ListTile(
+            leading: const Icon(Icons.smart_toy),
+            title: const Text('AI Disclaimer'),
+            onTap: () => Navigator.pushNamed(context, Routes.aiDisclaimer),
+          ),
+          const Divider(),
           ListTile(
             leading: const Icon(Icons.info),
             title: const Text('About'),

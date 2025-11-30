@@ -14,12 +14,11 @@ class LLMService extends ChangeNotifier {
   String _currentModel = '';
   bool _useRemote = false;
   String? _apiKey;
+  String _selectedModel = 'gemini-2.5-flash';
   final LlamaBridge _bridge = LlamaBridge();
 
   Future<void> initialize() async {
-    final configStore = ConfigStore();
-    await configStore.initialize();
-    _useRemote = configStore.useRemote;
+    _useRemote = await ConfigStore.getUseRemote();
     _apiKey = await ApiKeyStore.getApiKey();
     notifyListeners();
   }
@@ -35,8 +34,7 @@ class LLMService extends ChangeNotifier {
 
   Future<void> setUseRemote(bool useRemote) async {
     _useRemote = useRemote;
-    final configStore = ConfigStore();
-    configStore.useRemote = useRemote;
+    await ConfigStore.setUseRemote(useRemote);
     notifyListeners();
   }
 
@@ -50,8 +48,7 @@ class LLMService extends ChangeNotifier {
     _apiKey = null;
     _useRemote = false;
     await ApiKeyStore.clearApiKey();
-    final configStore = ConfigStore();
-    configStore.useRemote = false;
+    await ConfigStore.setUseRemote(false);
     notifyListeners();
   }
 
@@ -59,22 +56,27 @@ class LLMService extends ChangeNotifier {
     return await RemoteApi.testKey(apiKey);
   }
 
+  void setSelectedModel(String model) {
+    _selectedModel = model;
+    notifyListeners();
+  }
+
   Future<String> ask(String prompt) async {
     if (_useRemote && _apiKey != null && _apiKey!.isNotEmpty) {
       try {
-        return await RemoteApi.generate(_apiKey!, prompt);
+        return await RemoteApi.generate(_apiKey!, prompt, model: _selectedModel);
       } catch (e) {
         if (_isModelLoaded) {
           return await _askLocal(prompt);
         } else {
-          throw Exception('Remote failed and no local model available');
+          throw Exception('Remote API failed: $e\nNo local model loaded as fallback.');
         }
       }
     } else {
       if (_isModelLoaded) {
         return await _askLocal(prompt);
       } else {
-        throw Exception('No model available');
+        throw Exception('No model available. Please load a local model or configure remote API.');
       }
     }
   }
@@ -90,19 +92,20 @@ class LLMService extends ChangeNotifier {
   Stream<String> generateResponse(String prompt) async* {
     if (_useRemote && _apiKey != null && _apiKey!.isNotEmpty) {
       try {
-        final response = await RemoteApi.generate(_apiKey!, prompt);
+        final response = await RemoteApi.generate(_apiKey!, prompt, model: _selectedModel);
         yield response;
         return;
       } catch (e) {
         if (!_isModelLoaded) {
-          yield 'Error: Remote failed and no local model loaded';
+          yield 'Remote API Error: $e\n\nNo local model available for fallback.\nPlease check your API key or load a local model.';
           return;
         }
+        // Fall through to local model
       }
     }
 
     if (!_isModelLoaded) {
-      yield 'Error: Model not loaded';
+      yield 'No model available.\n\nPlease:\n1. Load a local model in Settings → Models, or\n2. Configure remote API in Settings → Remote API';
       return;
     }
 
@@ -117,5 +120,6 @@ class LLMService extends ChangeNotifier {
   String get currentModel => _currentModel;
   bool get useRemote => _useRemote;
   bool get hasApiKey => _apiKey != null && _apiKey!.isNotEmpty;
-  String get mode => _useRemote && hasApiKey ? 'Remote' : 'On-device';
+  String get mode => _useRemote && hasApiKey ? 'Remote ($_selectedModel)' : 'On-device';
+  String get selectedModel => _selectedModel;
 }

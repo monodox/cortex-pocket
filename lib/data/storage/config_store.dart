@@ -1,73 +1,73 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ConfigStore {
-  static final ConfigStore _instance = ConfigStore._internal();
-  factory ConfigStore() => _instance;
-  ConfigStore._internal();
-
-  late SharedPreferences _prefs;
-
-  Future<void> initialize() async {
-    _prefs = await SharedPreferences.getInstance();
-  }
-
-  // Remote API settings
-  bool get useRemote => _prefs.getBool('use_remote') ?? false;
-  set useRemote(bool value) => _prefs.setBool('use_remote', value);
-
-  // Model settings
-  String get modelPath => _prefs.getString('model_path') ?? '/storage/models/';
-  set modelPath(String value) => _prefs.setString('model_path', value);
-
-  String get currentModel => _prefs.getString('current_model') ?? '';
-  set currentModel(String value) => _prefs.setString('current_model', value);
-
-  String get quantization => _prefs.getString('quantization') ?? 'Q4';
-  set quantization(String value) => _prefs.setString('quantization', value);
-
-  // UI settings
-  bool get darkMode => _prefs.getBool('dark_mode') ?? false;
-  set darkMode(bool value) => _prefs.setBool('dark_mode', value);
-
-  String get selectedPersona => _prefs.getString('selected_persona') ?? 'Helper';
-  set selectedPersona(String value) => _prefs.setString('selected_persona', value);
-
-  // Performance settings
-  int get maxTokens => _prefs.getInt('max_tokens') ?? 2048;
-  set maxTokens(int value) => _prefs.setInt('max_tokens', value);
-
-  double get temperature => _prefs.getDouble('temperature') ?? 0.7;
-  set temperature(double value) => _prefs.setDouble('temperature', value);
-
-  int get threads => _prefs.getInt('threads') ?? 4;
-  set threads(int value) => _prefs.setInt('threads', value);
-
-  // Cache management
-  double get cacheSize => _prefs.getDouble('cache_size') ?? 0.0;
-  set cacheSize(double value) => _prefs.setDouble('cache_size', value);
-
-  Future<void> clearCache() async {
-    cacheSize = 0.0;
-  }
-
-  Future<void> reset() async {
-    await _prefs.clear();
-  }
-
-  // Legacy methods for backward compatibility
-  static Future<void> setUseRemote(bool useRemote) async {
-    final instance = ConfigStore();
-    if (!instance._prefs.containsKey('model_path')) {
-      await instance.initialize();
-    }
-    instance.useRemote = useRemote;
-  }
-
   static Future<bool> getUseRemote() async {
-    final instance = ConfigStore();
-    if (!instance._prefs.containsKey('model_path')) {
-      await instance.initialize();
-    }
-    return instance.useRemote;
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('use_remote') ?? false;
+  }
+
+  static Future<void> setUseRemote(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('use_remote', value);
+  }
+
+  static Future<String> getModelPath() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('model_path') ?? '/storage/models/';
+  }
+
+  static Future<void> setModelPath(String value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('model_path', value);
+  }
+
+  static Future<String> getCurrentModel() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('current_model') ?? '';
+  }
+
+  static Future<String> getQuantization() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('quantization') ?? 'Q4';
+  }
+
+  static Future<bool> getDarkMode() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('dark_mode') ?? false;
+  }
+
+  static Future<String> getSelectedPersona() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('selected_persona') ?? 'Helper';
+  }
+
+  static Future<int> getMaxTokens() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('max_tokens') ?? 2048;
+  }
+
+  static Future<double> getTemperature() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getDouble('temperature') ?? 0.7;
+  }
+
+  static Future<int> getThreads() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('threads') ?? 4;
+  }
+
+  static Future<double> getCacheSize() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getDouble('cache_size') ?? 0.0;
+  }
+
+  static Future<void> clearCache() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setDouble('cache_size', 0.0);
+  }
+
+  static Future<void> reset() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
   }
 }

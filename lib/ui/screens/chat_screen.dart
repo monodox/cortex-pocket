@@ -72,16 +72,27 @@ class _ChatScreenState extends State<ChatScreen> {
       _messages.add(aiMessage);
     });
 
-    await for (final token in _llmService.generateResponse(userMessage.content)) {
+    try {
+      await for (final token in _llmService.generateResponse(userMessage.content)) {
+        setState(() {
+          _messages.last = Message(
+            id: aiMessage.id,
+            content: token,
+            isUser: false,
+            timestamp: aiMessage.timestamp,
+          );
+        });
+        _scrollToBottom();
+      }
+    } catch (e) {
       setState(() {
         _messages.last = Message(
           id: aiMessage.id,
-          content: token,
+          content: 'Error: $e\n\nTip: Load a local model in Settings → Models or check your API key.',
           isUser: false,
           timestamp: aiMessage.timestamp,
         );
       });
-      _scrollToBottom();
     }
 
     setState(() {
@@ -126,6 +137,34 @@ class _ChatScreenState extends State<ChatScreen> {
           ],
         ),
         actions: [
+          if (_llmService.useRemote && _llmService.hasApiKey)
+            PopupMenuButton<String>(
+              icon: const Icon(Icons.tune),
+              onSelected: (model) {
+                _llmService.setSelectedModel(model);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Model switched to $model')),
+                );
+              },
+              itemBuilder: (context) => [
+                const PopupMenuItem(
+                  value: 'gemini-2.5-flash',
+                  child: Text('Gemini 2.5 Flash'),
+                ),
+                const PopupMenuItem(
+                  value: 'gemini-1.5-pro',
+                  child: Text('Gemini 1.5 Pro'),
+                ),
+                const PopupMenuItem(
+                  value: 'gpt-3.5-turbo',
+                  child: Text('GPT-3.5 Turbo'),
+                ),
+                const PopupMenuItem(
+                  value: 'gpt-4',
+                  child: Text('GPT-4'),
+                ),
+              ],
+            ),
           IconButton(
             icon: const Icon(Icons.person),
             onPressed: () => Navigator.pushNamed(context, Routes.personas),

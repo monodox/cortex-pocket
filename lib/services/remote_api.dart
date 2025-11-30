@@ -26,21 +26,21 @@ class RemoteApi {
     return isValidFormat;
   }
 
-  static Future<String> generate(String apiKey, String prompt, {int maxTokens = 150}) async {
+  static Future<String> generate(String apiKey, String prompt, {int maxTokens = 150, String model = 'gemini-2.5-flash'}) async {
     try {
       final isGemini = _isGeminiKey(apiKey);
       
       if (isGemini) {
-        return _generateGemini(apiKey, prompt, maxTokens);
+        return _generateGemini(apiKey, prompt, maxTokens, model);
       } else {
-        return _generateOpenAI(apiKey, prompt, maxTokens);
+        return _generateOpenAI(apiKey, prompt, maxTokens, model);
       }
     } catch (e) {
       throw Exception('Remote API failed: $e');
     }
   }
   
-  static Future<String> _generateOpenAI(String apiKey, String prompt, int maxTokens) async {
+  static Future<String> _generateOpenAI(String apiKey, String prompt, int maxTokens, String model) async {
     final response = await http.post(
       Uri.parse('$_openaiUrl/chat/completions'),
       headers: {
@@ -48,7 +48,7 @@ class RemoteApi {
         'Content-Type': 'application/json',
       },
       body: jsonEncode({
-        'model': 'gpt-3.5-turbo',
+        'model': model.startsWith('gpt') ? model : 'gpt-3.5-turbo',
         'messages': [{'role': 'user', 'content': prompt}],
         'max_tokens': maxTokens,
         'temperature': 0.7,
@@ -63,28 +63,34 @@ class RemoteApi {
     }
   }
   
-  static Future<String> _generateGemini(String apiKey, String prompt, int maxTokens) async {
-    final response = await http.post(
-      Uri.parse('$_geminiUrl/models/gemini-pro:generateContent').replace(
-        queryParameters: {'key': apiKey}
-      ),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'contents': [{
-          'parts': [{'text': prompt}]
-        }],
-        'generationConfig': {
-          'maxOutputTokens': maxTokens,
-          'temperature': 0.7,
-        }
-      }),
-    ).timeout(_timeout);
+  static Future<String> _generateGemini(String apiKey, String prompt, int maxTokens, String model) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$_geminiUrl/models/$model:generateContent').replace(
+          queryParameters: {'key': apiKey}
+        ),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'contents': [{
+            'parts': [{'text': prompt}]
+          }]
+        }),
+      ).timeout(_timeout);
 
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      return data['candidates'][0]['content']['parts'][0]['text'].toString().trim();
-    } else {
-      throw Exception('Gemini API Error: ${response.statusCode}');
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        if (data['candidates'] != null && data['candidates'].isNotEmpty) {
+          return data['candidates'][0]['content']['parts'][0]['text'].toString().trim();
+        } else {
+          throw Exception('No response from Gemini API');
+        }
+      } else {
+        final errorBody = response.body;
+        // Temporary: Return error details in response to see what's wrong
+        return 'DEBUG ERROR - Status: ${response.statusCode}, Body: $errorBody';
+      }
+    } catch (e) {
+      throw Exception('Gemini API request failed: $e');
     }
   }
 }

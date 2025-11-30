@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Enhanced Chat Interface**: Complete redesign with advanced features
+- **Mode Toggle Switch**: One-click switching between local and remote processing
+- **Dynamic Model Selection**: Provider-specific model options based on API key type
+- **Document Attachment**: Support for TXT, PDF, DOC, DOCX, MD file uploads
+- **Action Menu**: Quick access to document attachment and model switching
+- **Visual Mode Indicators**: Icons and colors showing current processing mode
+- **Smart Model Detection**: Automatic model list based on API provider
+- **Gemini Model Support**: Full support for Gemini 2.5 Flash, Pro, Lite, and 3.0 Preview
 - **Legal Compliance**: Complete legal documentation suite
 - **Privacy Policy Screen**: Comprehensive privacy information and data handling
 - **Terms of Use Screen**: Legal terms, acceptable use, and liability limitations
@@ -16,9 +24,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Legal Navigation**: Integrated legal section in settings with proper routing
 
 ### Enhanced
+- **Chat Experience**: Intuitive mode switching and model selection
+- **User Interface**: Clean toggle switches and visual feedback
+- **Error Handling**: Better error messages with helpful guidance
+- **Cross-Platform**: Improved compatibility across all supported platforms
 - **Settings UI**: Added dedicated legal section with clear navigation
 - **Route Management**: Extended routing system for legal screens
 - **Compliance Ready**: Full legal framework for app store deployment
+
+### Technical
+- **Provider Detection**: Automatic API provider identification
+- **Model Management**: Dynamic model lists based on API key type
+- **File Handling**: Secure document attachment with type validation
+- **State Management**: Improved reactive UI updates
+- **Code Quality**: Fixed lint warnings and improved async handling
+
+## [1.2.0] - 2024-12-20
+
+### Added
+- **Smart Chat Interface**: Revolutionary chat experience with mode switching
+- **Document Attachment**: Upload and process documents directly in chat
+- **Dynamic Model Selection**: Provider-aware model options
+- **Visual Mode Toggle**: Intuitive switch between local and remote processing
+- **Gemini Model Suite**: Support for latest Gemini models including 2.5 Flash
+- **Action Menu**: Quick access to all chat features
+
+### Enhanced
+- **User Experience**: Streamlined interface with visual feedback
+- **Error Handling**: Detailed error messages with actionable guidance
+- **Performance**: Optimized model switching and state management
 
 ## [1.1.0] - 2024-12-19
 

@@ -18,6 +18,10 @@ On-device AI powered by optimized local LLMs. Cortex brings powerful offline LLM
 - 📊 **Performance Monitoring**: Real-time benchmarks and metrics
 - 📁 **File Analysis**: Support for logs, code, and text files
 - ☁️ **Optional Remote API**: Secure cloud fallback with API key encryption
+- 🔄 **Smart Mode Switching**: One-click toggle between local and remote processing
+- 🎛️ **Dynamic Model Selection**: Provider-specific model options (Gemini/OpenAI)
+- 📎 **Document Attachment**: Support for TXT, PDF, DOC, DOCX, MD files
+- 🎯 **Intelligent Fallback**: Automatic local processing when remote fails
 
 ## 🚀 Quick Start
 
@@ -120,9 +124,24 @@ Cortex Pocket includes an optional remote API feature for enhanced capabilities:
 - **Easy disable/clear** - remove API key anytime
 
 ### Usage
-- Chat shows current mode: "Mode: On-device" or "Mode: Remote"
-- Remote failures automatically fall back to local processing
-- Benchmarks always use local models regardless of remote setting
+- **Mode Toggle**: Switch between local/remote with navbar toggle switch
+- **Model Selection**: Choose from provider-specific models via action menu
+- **Document Attachment**: Attach files using the plus button in chat
+- **Smart Fallback**: Remote failures automatically use local processing
+- **Visual Indicators**: Icons show current mode (⚡ local, ☁️ remote)
+- **Benchmarks**: Always use local models regardless of remote setting
+
+### Supported Models
+**Gemini API (AIza...):**
+- gemini-2.5-flash (Default)
+- gemini-2.5-pro
+- gemini-2.5-flash-lite  
+- gemini-3-pro-preview
+
+**OpenAI API (sk-...):**
+- gpt-3.5-turbo
+- gpt-4
+- gpt-4-turbo
 
 ## 🔒 Privacy & Security
 

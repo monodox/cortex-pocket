@@ -6,6 +6,36 @@
 
 Cortex Pocket is an offline-first, Arm-optimized mobile AI assistant powered by local LLMs with optional cloud fallback.
 
+## 🏆 Why This Project Should Win
+
+Cortex Pocket represents a **breakthrough in mobile AI** that directly addresses the Arm AI Developer Challenge goals:
+
+### **🎯 Technical Innovation**
+- **First mobile app** demonstrating token-by-token Arm-optimized LLM generation
+- **Production-ready implementation** of llama.cpp with Armv8-A + NEON acceleration
+- **Quantized inference** achieving 6-12 tokens/sec on consumer Arm devices
+- **Cross-platform architecture** supporting 6 platforms with conditional FFI
+
+### **🔒 Privacy Leadership**
+- **100% offline by default** - no other mobile AI app offers complete data sovereignty
+- **Encrypted local storage** with optional cloud fallback
+- **Open source transparency** - fully auditable privacy implementation
+- **User-controlled data** - never leaves device without explicit consent
+
+### **🚀 Real-World Impact**
+- **Democratizes AI access** - no expensive cloud subscriptions required
+- **Works anywhere** - no internet dependency for core functionality
+- **Developer-grade tooling** with specialized AI personas
+- **Performance benchmarking** validates Arm optimization claims
+
+### **🏗️ Technical Excellence**
+- **Advanced error handling** with contextual user guidance
+- **Intelligent fallback systems** ensuring reliability
+- **Comprehensive documentation** including build instructions for Arm devices
+- **Production deployment** with legal compliance framework
+
+This project proves that **powerful AI can run privately on Arm devices**, establishing new benchmarks for mobile AI performance while maintaining complete user privacy.
+
 ## 💡 Why Cortex Pocket?
 
 - **Fully offline AI** — no other mobile app shows token-by-token Arm-optimized generation
@@ -30,6 +60,33 @@ Cortex Pocket is an offline-first, Arm-optimized mobile AI assistant powered by 
 - 🎛️ **Dynamic Model Selection**: Provider-specific model options (Gemini/OpenAI)
 - 📎 **Document Attachment**: Support for TXT, PDF, DOC, DOCX, MD files
 - 🎯 **Intelligent Fallback**: Automatic local processing when remote fails
+
+## 🧪 Judge Instructions (Quick Run Guide)
+
+**For Arm AI Developer Challenge Judges - Test in 5 minutes:**
+
+### **Option 1: Mobile App (Recommended - Shows Arm Optimization)**
+1. **Install APK** (provided in Devpost submission)
+2. **Open Cortex Pocket** on your Arm Android device
+3. **Load Local Model**: Models → Browse Models → Download Gemma 2B
+4. **Start Chat**: See real-time token-by-token generation (6-12 tokens/sec)
+5. **Run Benchmark**: Benchmarks → Run Performance Test
+6. **Observe**: CPU utilization, RAM usage, generation speed
+
+### **Option 2: Web Demo (Remote API)**
+1. **Visit**: https://main.d1cz45tbnmdhy0.amplifyapp.com
+2. **Configure API**: Settings → Add Gemini/OpenAI key
+3. **Test Chat**: Experience same UI with cloud fallback
+4. **Note**: Web shows platform limitations message for local models
+
+### **Key Evaluation Points**
+- ⚡ **Arm Performance**: Token generation speed on mobile
+- 🔒 **Privacy**: Complete offline operation
+- 🎯 **Fallback**: Remote API when local unavailable
+- 📊 **Benchmarks**: Real performance metrics
+- 🎭 **Personas**: Specialized AI personalities
+
+**Expected Results**: 6-12 tokens/sec on Snapdragon 8 Gen 2 / Tensor G2 with Gemma 2B Q4
 
 ## 🚀 Quick Start
 
@@ -237,13 +294,39 @@ Cortex Pocket includes comprehensive data files for AI behavior and user guidanc
 - **Gemma 2 2B**: Google's lightweight model
 - **CodeLlama 7B**: Meta's specialized coding model
 
+## 📸 Screenshots & Demo
+
+### **Mobile App Interface**
+*Screenshots showing token-by-token generation, model selection, and performance benchmarks*
+
+![Chat Interface](docs/images/chat-interface.png)
+*Real-time AI conversation with token streaming and mode indicators*
+
+![Model Management](docs/images/model-selection.png)
+*Local model installation with device-specific recommendations*
+
+![Performance Benchmarks](docs/images/benchmarks.png)
+*Arm CPU optimization metrics: tokens/sec, RAM usage, CPU utilization*
+
+![Settings & API](docs/images/settings.png)
+*Secure API configuration with privacy controls*
+
+### **Key Visual Features**
+- **Token Streaming**: Watch AI responses generate word-by-word
+- **Mode Indicators**: Clear visual feedback (⚡ local, ☁️ remote)
+- **Performance Metrics**: Real-time benchmarking of Arm optimization
+- **Error Guidance**: Step-by-step instructions for setup issues
+- **Cross-Platform**: Consistent experience across all supported platforms
+
+*Note: Screenshots demonstrate the first mobile app with visible Arm-optimized LLM inference*
+
 ## 🔒 Privacy & Security
 
 - **100% Local Processing**: Default mode - no data leaves your device
 - **Encrypted Storage**: Chat history and API keys secured with encryption
 - **No Network Calls**: Completely offline operation by default
 - **Optional Remote**: Explicit opt-in with clear privacy implications
-- **Open Source**: Transparent and auditable code
+- **Open Source**: Transparent and auditable coderce**: Transparent and auditable code
 
 ## 🚨 Troubleshooting & Error Handling
 

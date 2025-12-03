@@ -229,6 +229,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           onPressed: _editApiKey,
                           child: const Text('Edit'),
                         ),
+                        TextButton(
+                          onPressed: _deleteApiKey,
+                          style: TextButton.styleFrom(foregroundColor: Colors.red),
+                          child: const Text('Delete'),
+                        ),
                       ],
                     ),
                   ),
@@ -262,9 +267,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           if (_llmService.hasApiKey)
             ListTile(
-              leading: const Icon(Icons.delete),
-              title: const Text('Delete API Key'),
-              subtitle: const Text('Remove stored API key and disable remote'),
+              leading: const Icon(Icons.delete, color: Colors.red),
+              title: const Text('Delete API Key', style: TextStyle(color: Colors.red)),
+              subtitle: const Text('Remove stored API key and disable remote mode'),
               onTap: _deleteApiKey,
             ),
           const Divider(),

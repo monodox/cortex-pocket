@@ -69,14 +69,14 @@ class LLMService extends ChangeNotifier {
         if (_isModelLoaded) {
           return await _askLocal(prompt);
         } else {
-          throw Exception('Remote API failed: $e\nNo local model loaded as fallback.');
+          throw Exception('Remote API failed: $e\n\nNo local model available for fallback.\nPlease load a local model or check your API key.');
         }
       }
     } else {
       if (_isModelLoaded) {
         return await _askLocal(prompt);
       } else {
-        throw Exception('No model available. Please load a local model or configure remote API.');
+        throw Exception('No AI model available.\n\nPlease either:\n• Load a local model (Models screen)\n• Configure remote API (Settings screen)');
       }
     }
   }
@@ -97,7 +97,17 @@ class LLMService extends ChangeNotifier {
         return;
       } catch (e) {
         if (!_isModelLoaded) {
-          yield 'Remote API Error: $e\n\nNo local model available for fallback.\nPlease check your API key or load a local model.';
+          yield '❌ **Remote API Error**\n\n'
+                'Error: $e\n\n'
+                '**No local model available for fallback.**\n\n'
+                '**To fix this:**\n'
+                '1. Check your API key in Settings\n'
+                '2. Verify internet connection\n'
+                '3. Or load a local model for offline use\n\n'
+                '**Load Local Model:**\n'
+                '• Go to Models → Browse Models\n'
+                '• Download Gemma 2B (recommended)\n'
+                '• Load for offline backup';
           return;
         }
         // Fall through to local model
@@ -105,19 +115,40 @@ class LLMService extends ChangeNotifier {
     }
 
     if (!_isModelLoaded) {
-      yield '🤖 **No Local Model Installed**\n\n'
-            '**To use Local Mode:**\n'
-            '1. Go to **Models** screen\n'
-            '2. Tap **Browse Models** (download icon)\n'
-            '3. Choose a model (Gemma 2B recommended for most devices)\n'
-            '4. Tap **Download from HuggingFace**\n'
-            '5. Place the .gguf file in assets/models/\n'
-            '6. Return and load the model\n\n'
-            '**Quick Start Models:**\n'
-            '• **Gemma 2 2B** - Lightweight, fast\n'
-            '• **Llama 3.2 3B** - Balanced performance\n'
-            '• **Phi-3.5 Mini** - Efficient for coding\n\n'
-            '**Alternative:** Switch to Remote mode with API key';
+      if (!_useRemote || !hasApiKey) {
+        yield '🤖 **Welcome to Cortex Pocket!**\n\n'
+              'To start chatting, you need either a **local model** or **remote API access**.\n\n'
+              '**Option 1: Local AI (Private & Offline)**\n'
+              '1. Tap **Models** in bottom navigation\n'
+              '2. Tap **Browse Models** (📥 icon)\n'
+              '3. Choose a model for your device:\n'
+              '   • **2-4GB RAM**: Gemma 2 2B (Q4)\n'
+              '   • **4-6GB RAM**: Phi-3.5 Mini (Q4)\n'
+              '   • **6GB+ RAM**: Llama 3.2 3B (Q4)\n'
+              '4. Download .gguf file from HuggingFace\n'
+              '5. Place in assets/models/ directory\n'
+              '6. Return and tap **Load Model**\n\n'
+              '**Option 2: Remote API (Requires Internet)**\n'
+              '1. Tap **Settings** in bottom navigation\n'
+              '2. Scroll to **Remote API** section\n'
+              '3. Enter your API key:\n'
+              '   • **OpenAI**: sk-...\n'
+              '   • **Google Gemini**: AIza...\n'
+              '4. Tap **Save & Test**\n'
+              '5. Enable **Use Remote API** toggle\n'
+              '6. Use the ☁️/⚡ toggle in chat to switch modes\n\n'
+              '**Need help?** Check the **About** screen for more details!';
+      } else {
+        yield '🤖 **No Local Model Available**\n\n'
+              'You\'re in **Remote API mode** but no local model is loaded for fallback.\n\n'
+              '**To add a local model:**\n'
+              '1. Go to **Models** screen\n'
+              '2. Tap **Browse Models** (📥 icon)\n'
+              '3. Download a model (Gemma 2B recommended)\n'
+              '4. Load the model for offline backup\n\n'
+              '**Current mode**: Remote API ($_selectedModel)\n'
+              '**Fallback**: None (local model recommended)';
+      }
       return;
     }
 
@@ -132,7 +163,15 @@ class LLMService extends ChangeNotifier {
   String get currentModel => _currentModel;
   bool get useRemote => _useRemote;
   bool get hasApiKey => _apiKey != null && _apiKey!.isNotEmpty;
-  String get mode => _useRemote && hasApiKey ? 'Remote ($_selectedModel)' : 'On-device';
+  String get mode {
+    if (_useRemote && hasApiKey) {
+      return 'Remote ($_selectedModel)';
+    } else if (_isModelLoaded) {
+      return 'Local ($_currentModel)';
+    } else {
+      return 'No Model';
+    }
+  }
   String get selectedModel => _selectedModel;
   
   bool get isGeminiKey => _apiKey != null && _apiKey!.startsWith('AIza');

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -11,7 +12,7 @@ class ModelSelectionScreen extends StatefulWidget {
 class _ModelSelectionScreenState extends State<ModelSelectionScreen> {
   String? selectedModel;
   String selectedQuantization = 'Q4';
-  bool _showDownloadable = false;
+  bool _showDownloadable = kIsWeb; // Always true on web
 
   final List<Map<String, dynamic>> models = [];
   
@@ -70,38 +71,41 @@ class _ModelSelectionScreenState extends State<ModelSelectionScreen> {
       appBar: AppBar(
         title: const Text('Model Management'),
         actions: [
-          IconButton(
-            icon: Icon(_showDownloadable ? Icons.storage : Icons.download),
-            onPressed: () => setState(() => _showDownloadable = !_showDownloadable),
-            tooltip: _showDownloadable ? 'Show Local Models' : 'Browse Models',
-          ),
-        ],
-      ),
-      body: Column(
-        children: [
-          if (!_showDownloadable)
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                children: [
-                  const Text('Quantization: '),
-                  DropdownButton<String>(
-                    value: selectedQuantization,
-                    items: ['Q8', 'Q6', 'Q4', 'Q3'].map((q) => 
-                      DropdownMenuItem(value: q, child: Text(q))
-                    ).toList(),
-                    onChanged: (value) => setState(() => selectedQuantization = value!),
-                  ),
-                ],
-              ),
+          if (!kIsWeb)
+            IconButton(
+              icon: Icon(_showDownloadable ? Icons.storage : Icons.download),
+              onPressed: () => setState(() => _showDownloadable = !_showDownloadable),
+              tooltip: _showDownloadable ? 'Show Local Models' : 'Browse Models',
             ),
-          Expanded(
-            child: _showDownloadable
-              ? _buildDownloadableModels()
-              : _buildLocalModels(),
-          ),
         ],
       ),
+      body: kIsWeb
+        ? _buildDownloadableModels() // Show web limitation message
+        : Column(
+            children: [
+              if (!_showDownloadable)
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    children: [
+                      const Text('Quantization: '),
+                      DropdownButton<String>(
+                        value: selectedQuantization,
+                        items: ['Q8', 'Q6', 'Q4', 'Q3'].map((q) => 
+                          DropdownMenuItem(value: q, child: Text(q))
+                        ).toList(),
+                        onChanged: (value) => setState(() => selectedQuantization = value!),
+                      ),
+                    ],
+                  ),
+                ),
+              Expanded(
+                child: _showDownloadable
+                  ? _buildDownloadableModels()
+                  : _buildLocalModels(),
+              ),
+            ],
+          ),
     );
   }
 
@@ -144,6 +148,61 @@ class _ModelSelectionScreenState extends State<ModelSelectionScreen> {
   }
 
   Widget _buildDownloadableModels() {
+    if (kIsWeb) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.web, size: 64, color: Colors.orange),
+              const SizedBox(height: 16),
+              const Text(
+                'Web Version - Remote API Only',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 12),
+              const Text(
+                'Local models cannot run in web browsers. Use remote API instead.',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 16),
+              ),
+              const SizedBox(height: 24),
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.blue.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Column(
+                  children: [
+                    const Text(
+                      '☁️ Configure Remote API',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      '• OpenAI (GPT-3.5, GPT-4)\n'
+                      '• Google Gemini (2.5 Flash, Pro)\n'
+                      '• Same chat experience\n'
+                      '• Secure API key storage',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                    const SizedBox(height: 16),
+                    ElevatedButton.icon(
+                      onPressed: () => Navigator.pushNamed(context, '/settings'),
+                      icon: const Icon(Icons.settings),
+                      label: const Text('Go to Settings'),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+    
     return Column(
       children: [
         Container(

@@ -204,6 +204,8 @@ Cortex Pocket includes an optional remote API feature for enhanced capabilities:
 - **Visual Indicators**: Icons show current mode (⚡ local, ☁️ remote)
 - **Benchmarks**: Always use local models regardless of remote setting
 - **Web Platform**: Local models not supported - requires Remote API configuration
+- **Error Recovery**: Comprehensive error messages with step-by-step solutions
+- **Smart Guidance**: Context-aware help based on current configuration
 
 ### Supported Models
 **Gemini API (AIza...):**
@@ -243,13 +245,78 @@ Cortex Pocket includes comprehensive data files for AI behavior and user guidanc
 - **Optional Remote**: Explicit opt-in with clear privacy implications
 - **Open Source**: Transparent and auditable code
 
+## 🚨 Troubleshooting & Error Handling
+
+### First Time Setup
+**Issue**: "No model available" when trying to chat
+- **Solution**: Choose either local model or remote API
+- **Local**: Go to Models → Browse Models → Download .gguf file
+- **Remote**: Go to Settings → Enter API key → Enable remote mode
+
+**Issue**: "Web version - local models not supported"
+- **Cause**: Web browsers cannot run native AI models
+- **Solution**: Use remote API (OpenAI/Gemini) in Settings
+- **Alternative**: Download mobile app for local AI
+
+### Model Installation
+**Issue**: Model loading fails on mobile
+- Check available RAM (4GB+ recommended)
+- Try smaller quantization (Q3 instead of Q4)
+- Close background apps
+- Restart app and try again
+
+**Issue**: "Model file not found"
+- Ensure .gguf file is in `assets/models/` directory
+- Check file name matches exactly
+- Verify file downloaded completely
+
+### Remote API Issues
+**Issue**: "API key invalid" error
+- Verify key format: `sk-...` (OpenAI) or `AIza...` (Gemini)
+- Check key hasn't expired
+- Test key in Settings before enabling
+
+**Issue**: Remote API fails, no local fallback
+- Load a local model for backup
+- Check internet connection
+- Verify API quota/billing status
+
+### Performance Issues
+**Issue**: Slow token generation
+- Enable performance mode in device settings
+- Close background apps
+- Try smaller model (Gemma 2B)
+- Check thermal throttling
+
+**Issue**: App crashes during inference
+- Insufficient RAM - try Q3 quantization
+- Model too large for device
+- Restart app and reload model
+
+### Platform-Specific
+**Web Platform**:
+- Only remote API supported
+- Local models not available
+- Use Settings to configure API key
+
+**Mobile Platform**:
+- Both local and remote supported
+- Download models from HuggingFace
+- Use benchmarks to test performance
+
+### Getting Help
+- Check **About** screen for app info
+- Review **FAQ** in app data
+- Open GitHub issue with device details
+- Include error messages and steps to reproduce
+
 ## 🤝 Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
 
 ## 📄 License
 
-This project is licensed under the MIT License - see [LICENSE](LICENSE) for details.
+This project is licensed under the MIT License - see [LICENSE](LICENSE) for details.ject is licensed under the MIT License - see [LICENSE](LICENSE) for details.
 
 ## 🛡️ Security
 

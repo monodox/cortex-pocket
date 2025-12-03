@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
+import 'src/io_directory_stub.dart'
+  if (dart.library.io) 'src/io_directory.dart';
 import '../ffi/llama_bridge_io.dart' if (dart.library.html) '../ffi/llama_bridge_web.dart';
 import '../data/storage/api_key_store.dart';
 import '../data/storage/config_store.dart';
@@ -16,11 +18,32 @@ class LLMService extends ChangeNotifier {
   String? _apiKey;
   String _selectedModel = 'gemini-2.5-flash';
   final LlamaBridge _bridge = LlamaBridge();
+  bool _hasLocalModelsCached = false;
 
   Future<void> initialize() async {
     _useRemote = await ConfigStore.getUseRemote();
     _apiKey = await ApiKeyStore.getApiKey();
+    // Scan for local models once during initialization (best-effort)
+    _hasLocalModelsCached = await _scanLocalModels();
     notifyListeners();
+  }
+
+  /// Scans common project/app folders for local model files (.gguf etc.).
+  /// Returns true if at least one candidate local model file is found.
+  Future<bool> _scanLocalModels() async {
+    try {
+      final files = listModelFilesInDir('assets/models');
+      return files.isNotEmpty;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  /// Public trigger to (re)scan for local models. Useful before showing errors.
+  Future<bool> scanLocalModels() async {
+    _hasLocalModelsCached = await _scanLocalModels();
+    notifyListeners();
+    return _hasLocalModelsCached;
   }
 
   Future<bool> loadModel(String modelPath) async {
@@ -160,6 +183,7 @@ class LLMService extends ChangeNotifier {
   }
 
   bool get isModelLoaded => _isModelLoaded;
+  bool get hasLocalModels => _hasLocalModelsCached;
   String get currentModel => _currentModel;
   bool get useRemote => _useRemote;
   bool get hasApiKey => _apiKey != null && _apiKey!.isNotEmpty;
